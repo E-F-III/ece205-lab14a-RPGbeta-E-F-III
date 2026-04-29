@@ -28,7 +28,8 @@ SRCS := main.cpp \
         Characters/NPC/NPCEarthBender.cpp \
         Characters/NPC/NPCFireBender.cpp \
         Characters/NPC/NPCharacter.cpp \
-        Characters/NPC/NPCWaterBender.cpp
+        Characters/NPC/NPCWaterBender.cpp \
+        BattleManager/BattleManager.cpp
 
 # ===========================================================
 # Object files (mirrors source paths under obj/)
@@ -40,7 +41,8 @@ INCLUDES := -I. \
             -ICharacters \
             -ICharacters/BendingSystem \
             -ICharacters/PlayerControlled \
-            -ICharacters/NPC
+            -ICharacters/NPC \
+            -IBattleManager
 
 # ===========================================================
 # Default target
