@@ -4,13 +4,12 @@
 //
 /// @file    EarthBender.cpp
 /// @author  Edward Felipe III <efelipe3@hawaii.edu>
-/// EarthBender is a derived class of PlayerCharacter.
-/////////////////////////////////////////////////////////////////////////////////
-
+///////////////////////////////////////////////////////////////////////////////
 #include <iostream>
 #include "PlayerCharacter.hpp"
 #include "EarthBender.hpp"
 #include "Earth_Bending.hpp"
+#include "util/TextDisplay.hpp"
 
 using namespace std;
 
@@ -30,7 +29,8 @@ EarthBender::~EarthBender() {
 void EarthBender::performAction(FighterCharacter& target) {
     int choice = -1;
     // Initialize choice variable for loop validation
-    cout << "\nGame Master: What would you like " << name << " to do?" << endl;
+    util::printColor("\nGame Master: What would you like " + name + " to do?" << endl, util::FG_CYAN);
+    
     earthBendingSystem->getAvailableBendingActions(*this); // Display available actions
     
     // Loop ensures the options 0-2 are selected (Validation)
@@ -38,22 +38,23 @@ void EarthBender::performAction(FighterCharacter& target) {
         cout << "Enter the number corresponding to your choice (0=Spike, 1=Shield, 2=Slam): ";
         cin >> choice;
         if (choice < 0 || choice > 2) {
-            cout << "Invalid input! Please enter a number between 0 and 2.\n" << endl;
+            util::printColor("Invalid input! Please enter a number between 0 and 2.\n", util::FG_RED);
+            cout << endl;
         }
     }
     
     // Call the appropriate function in earthBendingSystem based on user selection.
     switch (choice) {
         case 0:
-            cout << "\n--- Action Selected: Earth Spike ---\n" << endl;
+            util::printColor("\n--- Action Selected: Earth Spike ---\n", util::FG_MAGENTA);
             earthBendingSystem->earthSpike(*this, target);
             break;
         case 1:
-            cout << "\n--- Action Selected: Rock Shield ---\n" << endl;
+            util::printColor("\n--- Action Selected: Rock Shield ---\n", util::FG_WHITE);
             earthBendingSystem->rockShield(*this, target);
             break;
         case 2:
-            cout << "\n--- Action Selected: Seismic Slam ---\n" << endl;
+            util::printColor("\n--- Action Selected: Seismic Slam ---\n", util::FG_MAGENTA);
             earthBendingSystem->seismicSlam(*this, target);
             break;
     }
@@ -62,11 +63,12 @@ void EarthBender::performAction(FighterCharacter& target) {
 /// Print EarthBender-specific stats in addition to base stats
 void EarthBender::printStats() {
     PlayerCharacter::printStats();
-    cout << "Profession: EarthBender" << endl;
+    util::printColor("Profession: EarthBender\n", util::FG_MAGENTA);
     cout << "------------------------------------" << endl;
 }
 
 /// EarthBender-specific greeting
 void EarthBender::greet() const {
-    cout << name << " the EarthBender: Greetings! I am " << name << ". The earth is at my command, and I will use it to protect my allies" << endl;
+    util::printColor(name + " the EarthBender: ", util::FG_MAGENTA);
+    util::printType("Greetings! I am " + name + ". The earth is at my command, and I will use it to protect my allies\n", 30);
 }
