@@ -1,17 +1,14 @@
 ///////////////////////////////////////////////////////////////////////////////
 //  University of Hawaii, College of Engineering
-//  Lab 11a - Game Character Class Part II - ECE 205 - Spring 2025
+//  Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
 //
-///
 /// @file    FighterCharacter.cpp
 /// @author  Edward Felipe III <efelipe3@hawaii.edu>
 /// FighterCharacter is a derived class of GameCharacter.
 /// FighterCharacters are GameCharacters that specialize in physical combat, using their strength and agility to defeat enemies.
 /////////////////////////////////////////////////////////////////////////////////
-
 #include <iostream>
 #include <random>
-
 #include "GameCharacter.hpp"
 #include "FighterCharacter.hpp"
 
@@ -85,17 +82,17 @@ void FighterCharacter::setDefense(int defense) {
 
 void FighterCharacter::printStats() {
     std::string styleNames[] = {"Air", "Earth", "Fire", "Water"};
-    std::cout << "--- " << name << " Stats ---" << std::endl;
+    util::printColor("--- " + name + " Stats ---\n", util::FG_WHITE);
     std::cout << "Bending: " << styleNames[bendingStyle] << std::endl;
-    std::cout << "Health: " << health << std::endl;
+    util::printColor("Health: " + std::to_string(health) + "\n", util::FG_GREEN);
 }
 
 void FighterCharacter::greet() const {
-    std::cout << "Greetings, I am " << name << ", a " << (bendingStyle == air ? "Air" : bendingStyle == earth ? "Earth" : bendingStyle == fire ? "Fire" : "Water") << " bender!" << std::endl;
+    cout << name + ": Greetings! I am a master of bending arts!" << endl;
 }
 
 // perform action is a placeholder for now, but it will be the main function that handles combat logic and interactions with other characters.
 void FighterCharacter::performAction(FighterCharacter& target) {
-    std::cout << name << " performs a basic attack on " << target.getName() << "!" << std::endl;
+    std::cout << name + " performs a basic attack on " << target.getName() + "!" << std::endl;
     // Basic attack logic can be implemented here, and this method can be overridden by derived classes for more specific actions.
 }
