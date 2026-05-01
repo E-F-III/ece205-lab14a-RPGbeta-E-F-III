@@ -1,18 +1,17 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  University of Hawaii, College of Engineering
-//  Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
+// University of Hawaii, College of Engineering
+// Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
 //
 /// @file    NPCEarthBender.cpp
 /// @author  Edward Felipe III <efelipe3@hawaii.edu>
 /// NPCEarthBender is a derived class of NPCharacter. EarthBenders use earth manipulation to fight enemies and protect allies.
 /////////////////////////////////////////////////////////////////////////////////
-
 #include <iostream>
-
 #include "GameCharacter.hpp"
 #include "NPCharacter.hpp"
 #include "NPCEarthBender.hpp"
 #include "Earth_Bending.hpp"
+#include "util/TextDisplay.hpp"
 
 using namespace std;
 
@@ -30,6 +29,8 @@ NPCEarthBender::~NPCEarthBender() {
 
 /// use bending system to perform an earth bending action
 void NPCEarthBender::performAction(FighterCharacter& target) {
+    util::printColor("\n[AI] " + name + " performs an Earth Bending action!\n", util::FG_CYAN);
+    
     // for now, randomize the action selection for NPCs
     int choice = rand() % 3; // Randomly select an action (0, 1, or 2)
     switch (choice) {
@@ -51,11 +52,12 @@ void NPCEarthBender::performAction(FighterCharacter& target) {
 /// Print EarthBender-specific stats in addition to base stats
 void NPCEarthBender::printStats() {
     NPCharacter::printStats();
-    cout << "Profession: EarthBender" << endl;
+    util::printColor("Profession: EarthBender\n", util::FG_MAGENTA);
     cout << "------------------------------------" << endl;
 }
 
 /// EarthBender-specific greeting
 void NPCEarthBender::greet() const {
-    cout << name << " the EarthBender: Greetings! I am " << name << ". The earth is at my command, and I will use it to protect my allies" << endl;
+    util::printColor(name + " the EarthBender: ", util::FG_MAGENTA);
+    util::printType("Greetings! I am " + name + ". The earth is at my command, and I will use it to protect my allies\n", 30);
 }
