@@ -2,12 +2,13 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include "util/TextDisplay.hpp"
 
 // Constructor
-BattleManager::BattleManager(std::vector<FighterCharacter*> p, std::vector<FighterCharacter*> e) 
+BattleManager::BattleManager(std::vector<FighterCharacter*> p, std::vector<FighterCharacter*> e)
     : players(p), enemies(e) {}
 
-// Destructor 
+// Destructor
 BattleManager::~BattleManager() {
     // Per your note: main handles cleanup or characters are shared.
 }
@@ -20,14 +21,23 @@ bool BattleManager::isPartyAlive(const std::vector<FighterCharacter*>& party) {
 }
 
 void BattleManager::displayHealth() {
-    std::cout << "\n========== HEALTH STATUS ==========\n";
+    util::clearScreen(); // Keeps the console from scrolling infinitely
+    util::printColor("\n========== HEALTH STATUS ==========\n", util::FG_CYAN);
+    
     std::cout << "Players:\n";
-    for (auto p : players)
-        std::cout << " - " << p->getName() << " (HP: " << p->getHealth() << ")\n";
+    for (auto p : players) {
+        std::cout << " - " << p->getName() << " ";
+        util::printProgressBar(p->getHealth(), 100, '#', util::FG_GREEN);
+        std::cout << " (HP: " << p->getHealth() << ")\n";
+    }
+
     std::cout << "\nEnemies:\n";
-    for (auto e : enemies)
-        std::cout << " - " << e->getName() << " (HP: " << e->getHealth() << ")\n";
-    std::cout << "===================================\n";
+    for (auto e : enemies) {
+        std::cout << " - " << e->getName() << " ";
+        util::printProgressBar(e->getHealth(), 100, '#', util::FG_RED);
+        std::cout << " (HP: " << e->getHealth() << ")\n";
+    }
+    util::printColor("===================================\n", util::FG_CYAN);
 }
 
 FighterCharacter* BattleManager::getRandomAliveMember(std::vector<FighterCharacter*>& party) {
@@ -35,7 +45,7 @@ FighterCharacter* BattleManager::getRandomAliveMember(std::vector<FighterCharact
     for (auto member : party) {
         if (member->getHealth() > 0) aliveMembers.push_back(member);
     }
-    
+
     if (aliveMembers.empty()) return nullptr;
     return aliveMembers[rand() % aliveMembers.size()];
 }
@@ -43,12 +53,10 @@ FighterCharacter* BattleManager::getRandomAliveMember(std::vector<FighterCharact
 void BattleManager::runBattle() {
     while (isPartyAlive(players) && isPartyAlive(enemies)) {
         displayHealth();
-
         // 1. Players Turn
         for (auto p : players) {
             if (isPartyAlive(enemies)) performTurn(p, players, enemies, false);
         }
-
         // 2. Enemies Turn
         for (auto e : enemies) {
             if (isPartyAlive(players)) performTurn(e, enemies, players, true);
@@ -56,23 +64,23 @@ void BattleManager::runBattle() {
     }
 
     if (isPartyAlive(players)) {
-        std::cout << "\n★★★ VICTORY! ★★★\n";
+        util::printColor("\n★★★ VICTORY! ★★★\n", util::FG_YELLOW);
     } else {
-        std::cout << "\n☠ DEFEAT... ☠\n";
+        util::printColor("\n ☠  DEFEAT...  ☠ \n", util::FG_RED);
     }
 }
 
-void BattleManager::performTurn(FighterCharacter* attacker, 
-                                std::vector<FighterCharacter*>& allies, 
-                                std::vector<FighterCharacter*>& enemies, 
+void BattleManager::performTurn(FighterCharacter* attacker,
+                                std::vector<FighterCharacter*>& allies,
+                                std::vector<FighterCharacter*>& enemies,
                                 bool isNPC) {
     if (attacker->getHealth() <= 0) return;
-
-    std::cout << "\n>> " << attacker->getName() << "'s turn!\n";
+    
+    std::string turnMsg = "\n>> " + attacker->getName() + "'s turn!\n";
+    util::printColor(turnMsg, util::FG_MAGENTA);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
 
     FighterCharacter* finalTarget = nullptr;
-
     if (isNPC) {
         // AI Logic: 80% Attack, 20% Support
         if ((rand() % 100 < 20)) {
@@ -89,14 +97,12 @@ void BattleManager::performTurn(FighterCharacter* attacker,
             std::cin.clear();
             std::cin.ignore(1000, '\n');
         }
-
         std::vector<FighterCharacter*>& potentialTargets = (choice == 0) ? enemies : allies;
-        
+
         for (size_t i = 0; i < potentialTargets.size(); i++) {
-            std::cout << i << ": " << potentialTargets[i]->getName() 
+            std::cout << i << ": " << potentialTargets[i]->getName()
                       << " (HP: " << potentialTargets[i]->getHealth() << ")\n";
         }
-
         int targetIdx;
         std::cout << "Select index: ";
         while (!(std::cin >> targetIdx) || targetIdx < 0 || targetIdx >= static_cast<int>(potentialTargets.size()) || potentialTargets[targetIdx]->getHealth() <= 0) {
@@ -106,7 +112,6 @@ void BattleManager::performTurn(FighterCharacter* attacker,
         }
         finalTarget = potentialTargets[targetIdx];
     }
-
     if (finalTarget) {
         attacker->performAction(*finalTarget);
     }
