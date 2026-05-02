@@ -1,5 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
-// University of Hawaii, College of Engineering
+//  University of Hawaii, College of Engineering
 // Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
 //
 /// @file    NPCWaterBender.cpp
@@ -12,21 +11,17 @@
 #include "NPCWaterBender.hpp"
 #include "Water_Bending.hpp"
 #include "util/TextDisplay.hpp"
-
 using namespace std;
-
 /// Constructor: initializes the water bending system
 NPCWaterBender::NPCWaterBender(std::string& characterName, int& raceCode) : NPCharacter(characterName, raceCode) {
     // Initialize water bending system
     waterBendingSystem = new WaterBending();
 }
-
 // Destructor: Cleanup pointer to prevent memory leaks
 NPCWaterBender::~NPCWaterBender() {
     delete waterBendingSystem;
     // Free memory allocated in constructor
 }
-
 /// use bending system to perform a water bending action
 void NPCWaterBender::performAction(FighterCharacter& target) {
     util::printColor("\n[AI] " + name + " performs a Water Bending action!\n", util::FG_CYAN);
@@ -48,14 +43,12 @@ void NPCWaterBender::performAction(FighterCharacter& target) {
             break;
     }
 }
-
 /// Print WaterBender-specific stats in addition to base stats
 void NPCWaterBender::printStats() {
     NPCharacter::printStats();
     util::printColor("Profession: WaterBender\n", util::FG_CYAN);
     cout << "------------------------------------" << endl;
 }
-
 /// WaterBender-specific greeting
 void NPCWaterBender::greet() const {
     util::printColor(name + " the WaterBender: ", util::FG_CYAN);
