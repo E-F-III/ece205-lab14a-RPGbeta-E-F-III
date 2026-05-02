@@ -48,10 +48,13 @@ void BattleManager::runBattle() {
         // 1. Players Turn
         for (auto p : players) {
             if (isPartyAlive(enemies)) performTurn(p, players, enemies, false);
+            BattleManager::displayHealth(); // Update health after each player's turn
         }
         // 2. Enemies Turn
         for (auto e : enemies) {
+            util::showLoadingSpinner("Enemy performing action...", 2000); // Brief pause for dramatic effect
             if (isPartyAlive(players)) performTurn(e, enemies, players, true);
+            //  BattleManager::displayHealth(); // Update health after each enemy's turn
         }
     }
     if (isPartyAlive(players)) {
@@ -59,7 +62,7 @@ void BattleManager::runBattle() {
     } else {
         util::printColor("\n ☠  DEFEAT...  ☠ \n", util::FG_RED);
     }
-}
+}   
 void BattleManager::performTurn(FighterCharacter* attacker,
                                 std::vector<FighterCharacter*>& allies,
                                 std::vector<FighterCharacter*>& enemies,
