@@ -1,5 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
-// University of Hawaii, College of Engineering
+//  University of Hawaii, College of Engineering
 // Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
 //
 /// @file    WaterBender.cpp
@@ -11,26 +10,22 @@
 #include "WaterBender.hpp"
 #include "Water_Bending.hpp"
 #include "util/TextDisplay.hpp"
-
 using namespace std;
-
 /// Constructor: initializes the water bending system
 WaterBender::WaterBender(std::string& characterName, int& raceCode) : PlayerCharacter(characterName, raceCode) {
     // Initialize water bending system
     waterBendingSystem = new WaterBending();
 }
-
 // Destructor: Cleanup pointer to prevent memory leaks
 WaterBender::~WaterBender() {
     delete waterBendingSystem;
     // Free memory allocated in constructor
 }
-
 /// use bending system to perform a water bending action
 void WaterBender::performAction(FighterCharacter& target) {
     int choice = -1;
     // Initialize choice variable for loop validation
-    util::printColor("\nGame Master: What would you like " + name + " to do?" << endl, util::FG_CYAN);
+    util::printColor("\nGame Master: What would you like " + name + " to do?\n", util::FG_CYAN);
     
     waterBendingSystem->getAvailableBendingActions(*this); // Display available actions
     
@@ -60,14 +55,12 @@ void WaterBender::performAction(FighterCharacter& target) {
             break;
     }
 }
-
 /// Print WaterBender-specific stats in addition to base stats
 void WaterBender::printStats() {
     PlayerCharacter::printStats();
     util::printColor("Profession: WaterBender\n", util::FG_CYAN);
     cout << "------------------------------------" << endl;
 }
-
 /// WaterBender-specific greeting
 void WaterBender::greet() const {
     util::printColor(name + " the WaterBender: ", util::FG_CYAN);
