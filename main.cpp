@@ -3,7 +3,7 @@
 //  Lab 11a - Game Character Class Part II - ECE 205 - Spring 2025
 //
 /// @file    main.cpp
-/// @author  Steven Daniel Javier <sdjavier@hawaii.edu>
+/// @author  Menden Cannistra <mendenc@hawaii.edu>
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
@@ -24,6 +24,9 @@
 #include "NPCFireBender.hpp"
 #include "NPCWaterBender.hpp"
 
+// Include the Utility header for pretty text
+#include "util/TextDisplay.hpp"
+
 using namespace std;
 
 // --- Helper Functions (Factory Pattern) ---
@@ -31,7 +34,9 @@ using namespace std;
 PlayerCharacter* createPlayer(int i) {
     string name;
     int code;
-    cout << "\nEnter name for Player " << (i + 1) << ": ";
+    
+    util::printColor("\n[ Player Creation " + to_string(i + 1) + " ]\n", util::FG_CYAN);
+    cout << "Enter name: ";
     cin.ignore(1000, '\n'); 
     getline(cin, name);
 
@@ -42,31 +47,45 @@ PlayerCharacter* createPlayer(int i) {
         cin.ignore(1000, '\n');
     }
 
+    PlayerCharacter* newPlayer = nullptr;
     switch (code) {
-        case 0: return new AirBender(name, code);
-        case 1: return new EarthBender(name, code);
-        case 2: return new FireBender(name, code);
-        case 3: return new WaterBender(name, code);
-        default: return nullptr;
+        case 0: newPlayer = new AirBender(name, code); break;
+        case 1: newPlayer = new EarthBender(name, code); break;
+        case 2: newPlayer = new FireBender(name, code); break;
+        case 3: newPlayer = new WaterBender(name, code); break;
     }
+
+    if (newPlayer) {
+        newPlayer->greet(); // Triggers the typing animation intro
+    }
+    return newPlayer;
 }
 
 NPCharacter* createNPC(int i) {
     int code = rand() % 4;
     string name = "Enemy " + to_string(i + 1);
+    NPCharacter* newEnemy = nullptr;
+
     switch (code) {
-        case 0: return new NPCAirBender(name, code);
-        case 1: return new NPCEarthBender(name, code);
-        case 2: return new NPCFireBender(name, code);
-        case 3: return new NPCWaterBender(name, code);
-        default: return nullptr;
+        case 0: newEnemy = new NPCAirBender(name, code); break;
+        case 1: newEnemy = new NPCEarthBender(name, code); break;
+        case 2: newEnemy = new NPCFireBender(name, code); break;
+        case 3: newEnemy = new NPCWaterBender(name, code); break;
     }
+
+    return newEnemy;
 }
 
 // --- Main Execution ---
 
 int main() {
+    // 0. Initial Terminal Prep
+    util::clearScreen();
     srand(static_cast<unsigned int>(time(NULL)));
+
+    util::printColor("=========================================\n", util::FG_MAGENTA);
+    util::printColor("       WELCOME TO THE BENDING ARENA      \n", util::BOLD);
+    util::printColor("=========================================\n", util::FG_MAGENTA);
 
     int numPlayers, numEnemies;
     vector<FighterCharacter*> players;
@@ -93,10 +112,11 @@ int main() {
     }
 
     // 3. Hand over control to the BattleManager
-    // We pass the vectors to the manager. It will handle the loop AND the deletion.
     BattleManager battle(players, enemies);
     
-    cout << "\n--- THE BATTLE BEGINS ---" << endl;
+    util::printColor("\n--- THE BATTLE BEGINS ---\n", util::FG_YELLOW);
+    util::showLoadingSpinner("Loading Arena... ", 1500); // Visual flair before starting
+    
     battle.runBattle();
 
     return 0; 

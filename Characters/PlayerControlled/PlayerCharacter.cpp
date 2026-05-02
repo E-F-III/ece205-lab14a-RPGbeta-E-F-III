@@ -1,16 +1,16 @@
 ///////////////////////////////////////////////////////////////////////////////
-//  University of Hawaii, College of Engineering
-//  Lab 11a - Game Character Class Part II - ECE 205 - Spring 2025
+// University of Hawaii, College of Engineering
+// Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
 //
-///
 /// @file    PlayerCharacter.cpp
 /// @author  Steven Daniel Javier <sdjavier@hawaii.edu>
 ///////////////////////////////////////////////////////////////////////////////
-
 #include <iostream>
 #include <string>
-#include <random>
+#include "GameCharacter.hpp"
 #include "PlayerCharacter.hpp"
+#include "util/TextDisplay.hpp"
+
 using namespace std;
 
 /// constructor declaration for "PlayerCharacter"
@@ -25,9 +25,11 @@ PlayerCharacter::PlayerCharacter(std::string& characterName, int& bendingStyleCo
 
 ///greeting using the name of PlayerCharacter
 void PlayerCharacter::greet() const {
-    cout << name << " : Hello, my name is " << name << ". How can I help with your quest?" << endl;
+    util::printColor(name + ": ", util::FG_WHITE);
+    cout << "Hello, my name is " << name << ". How can I help with your quest?" << endl;
 }
 
 void PlayerCharacter::performAction(FighterCharacter& target) {
+    util::printColor("[" + name + "] performing action on " + target.getName() + "!\n", util::FG_CYAN);
     cout << "I am performing an action  on " << target.getName() << "!" << endl;
 }
