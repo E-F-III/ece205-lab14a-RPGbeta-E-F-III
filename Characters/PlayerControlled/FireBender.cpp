@@ -1,5 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
-// University of Hawaii, College of Engineering
+//  University of Hawaii, College of Engineering
 // Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
 //
 /// @file    FireBender.cpp
@@ -11,26 +10,22 @@
 #include "FireBender.hpp"
 #include "Fire_Bending.hpp"
 #include "util/TextDisplay.hpp"
-
 using namespace std;
-
 /// Constructor: initializes the fire bending system
 FireBender::FireBender(std::string& characterName, int& raceCode) : PlayerCharacter(characterName, raceCode) {
     // Initialize fire bending system
     fireBendingSystem = new FireBending();
 }
-
 // Destructor: Cleanup pointer to prevent memory leaks
 FireBender::~FireBender() {
     delete fireBendingSystem;
     // Free memory allocated in constructor
 }
-
 /// use bending system to perform a fire bending action
 void FireBender::performAction(FighterCharacter& target) {
     int choice = -1;
     // Initialize choice variable for loop validation
-    util::printColor("\nGame Master: What would you like " + name + " to do?" << endl, util::FG_CYAN);
+    util::printColor("\nGame Master: What would you like " + name + " to do?\n", util::FG_CYAN);
     
     fireBendingSystem->getAvailableBendingActions(*this); // Display available actions
     
@@ -60,14 +55,12 @@ void FireBender::performAction(FighterCharacter& target) {
             break;
     }
 }
-
 /// Print FireBender-specific stats in addition to base stats
 void FireBender::printStats() {
     PlayerCharacter::printStats();
     util::printColor("Profession: FireBender\n", util::FG_RED);
     cout << "------------------------------------" << endl;
 }
-
 /// FireBender-specific greeting
 void FireBender::greet() const {
     util::printColor(name + " the FireBender: ", util::FG_RED);
