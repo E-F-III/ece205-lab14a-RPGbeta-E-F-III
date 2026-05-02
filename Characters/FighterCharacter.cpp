@@ -11,7 +11,7 @@
 #include <random>
 #include "GameCharacter.hpp"
 #include "FighterCharacter.hpp"
-
+#include "util/TextDisplay.hpp"
 using namespace std;
 
 int FighterCharacter::rollDice(int lower, int upper) {

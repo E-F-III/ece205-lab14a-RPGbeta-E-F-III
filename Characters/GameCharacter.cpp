@@ -11,6 +11,7 @@
 #include <iostream>
 #include <string>
 #include "GameCharacter.hpp"
+#include "util/TextDisplay.hpp"
 
 //Default GameCharacter constructor
 GameCharacter::GameCharacter() = default;
@@ -32,10 +33,10 @@ void GameCharacter::setName(std::string& newName){
 
 void GameCharacter::greet() const{
   util::printColor(name + ": ", util::FG_WHITE);
-  cout << "Hello, my name is " << name << "." << std::endl;
+  std::cout << "Hello, my name is " << name << "." << std::endl;
 }
 
 void GameCharacter::speak(std::string& response){
   util::printColor(name + ": ", util::FG_WHITE);
-  cout << response << std::endl;
+  std::cout << response << std::endl;
 }
