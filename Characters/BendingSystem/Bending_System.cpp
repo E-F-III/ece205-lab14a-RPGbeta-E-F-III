@@ -1,5 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
-// University of Hawaii, College of Engineering
+//  University of Hawaii, College of Engineering
 // Lab 11a - Game Character Class Part II - ECE 205 - Spring 2025
 //
 /// @file    Bending_System.cpp
@@ -9,14 +8,11 @@
 #include "Bending_System.hpp"
 #include "PlayerCharacter.hpp"
 #include "util/TextDisplay.hpp"
-
 using namespace std;
-
 /// Constructor: initializes the bending system
 BendingSystem::BendingSystem() {
     // Initialize any common bending system attributes if needed
 }
-
 /// Display available bending actions for a given character
 std::vector<std::string> BendingSystem::getAvailableBendingActions(FighterCharacter& character) {
     util::printColor("\n[SYSTEM] Available bending actions for " + character.getName() + ":\n", util::FG_CYAN);
