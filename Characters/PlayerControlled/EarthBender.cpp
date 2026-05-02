@@ -1,6 +1,5 @@
-///////////////////////////////////////////////////////////////////////////////
 //  University of Hawaii, College of Engineering
-//  Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
+// Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
 //
 /// @file    EarthBender.cpp
 /// @author  Edward Felipe III <efelipe3@hawaii.edu>
@@ -10,26 +9,22 @@
 #include "EarthBender.hpp"
 #include "Earth_Bending.hpp"
 #include "util/TextDisplay.hpp"
-
 using namespace std;
-
 /// Constructor: initializes the earth bending system
 EarthBender::EarthBender(std::string& characterName, int& raceCode) : PlayerCharacter(characterName, raceCode) {
     // Initialize earth bending system
     earthBendingSystem = new EarthBending();
 }
-
 // Destructor: Cleanup pointer to prevent memory leaks
 EarthBender::~EarthBender() {
     delete earthBendingSystem;
     // Free memory allocated in constructor
 }
-
 /// use bending system to perform an earth bending action
 void EarthBender::performAction(FighterCharacter& target) {
     int choice = -1;
     // Initialize choice variable for loop validation
-    util::printColor("\nGame Master: What would you like " + name + " to do?" << endl, util::FG_CYAN);
+    util::printColor("\nGame Master: What would you like " + name + " to do?\n", util::FG_CYAN);
     
     earthBendingSystem->getAvailableBendingActions(*this); // Display available actions
     
@@ -59,14 +54,12 @@ void EarthBender::performAction(FighterCharacter& target) {
             break;
     }
 }
-
 /// Print EarthBender-specific stats in addition to base stats
 void EarthBender::printStats() {
     PlayerCharacter::printStats();
     util::printColor("Profession: EarthBender\n", util::FG_MAGENTA);
     cout << "------------------------------------" << endl;
 }
-
 /// EarthBender-specific greeting
 void EarthBender::greet() const {
     util::printColor(name + " the EarthBender: ", util::FG_MAGENTA);
