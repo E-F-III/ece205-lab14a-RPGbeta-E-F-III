@@ -1,5 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
-// University of Hawaii, College of Engineering
+//  University of Hawaii, College of Engineering
 // Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
 //
 /// @file    Earth_Bending.cpp
@@ -8,14 +7,11 @@
 #include <iostream>
 #include "Earth_Bending.hpp"
 #include "util/TextDisplay.hpp"
-
 using namespace std;
-
 /// Constructor: initializes the earth bending system
 EarthBending::EarthBending() {
     // No specific initialization required
 }
-
 // Earth Spike: a sharp spike of earth that can impale enemies
 void EarthBending::earthSpike(FighterCharacter& character, FighterCharacter& target) {
     util::printColor(character.getName() + " uses Earth Spike on " + target.getName() + "!\n", util::FG_MAGENTA);
@@ -32,7 +28,6 @@ void EarthBending::earthSpike(FighterCharacter& character, FighterCharacter& tar
     
     util::printColor("Earth Spike deals " + std::to_string(damage) + " damage to " + target.getName() + "\n", util::FG_MAGENTA); 
 }
-
 // Rock Shield: creates a sturdy shield of rock that can block attacks
 void EarthBending::rockShield(FighterCharacter& character, FighterCharacter& target) {
     util::printColor(character.getName() + " uses Rock Shield to protect " + target.getName() + "!\n", util::FG_MAGENTA);
@@ -42,13 +37,11 @@ void EarthBending::rockShield(FighterCharacter& character, FighterCharacter& tar
     // In this simple game, shielding prevents immediate damage
     target.setHealth(target.getHealth()); 
 }
-
 // Seismic Slam: slams the ground to create a shockwave that damages and knocks back enemies
 void EarthBending::seismicSlam(FighterCharacter& character, FighterCharacter& target) {
     util::printColor(character.getName() + " uses Seismic Slam on " + target.getName() + "!\n", util::FG_MAGENTA);
     
     cout << "\nSeismic Slam hits!" << endl;
-
     int targetHealth = target.getHealth();
     
     // Calculate damage: Higher range for slam attack
@@ -59,7 +52,6 @@ void EarthBending::seismicSlam(FighterCharacter& character, FighterCharacter& ta
     
     util::printColor("Seismic Slam deals " + std::to_string(damage) + " damage to " + target.getName() + "\n", util::FG_MAGENTA); 
 }
-
 std::vector<std::string> EarthBending::getAvailableBendingActions(FighterCharacter& character) {
     vector<std::string> actions = {"Earth Spike", "Rock Shield", "Seismic Slam"};
     
