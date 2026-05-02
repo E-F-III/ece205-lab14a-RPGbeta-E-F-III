@@ -1,5 +1,4 @@
-///////////////////////////////////////////////////////////////////////////////
-// University of Hawaii, College of Engineering
+//  University of Hawaii, College of Engineering
 // Lab 13b - Game Character Class Part III (Polymorphism) - ECE 205 - Spring 2026
 //
 /// @file    NPCEarthBender.cpp
@@ -12,21 +11,17 @@
 #include "NPCEarthBender.hpp"
 #include "Earth_Bending.hpp"
 #include "util/TextDisplay.hpp"
-
 using namespace std;
-
 /// Constructor: initializes the earth bending system
 NPCEarthBender::NPCEarthBender(std::string& characterName, int& raceCode) : NPCharacter(characterName, raceCode) {
     // Initialize earth bending system
     earthBendingSystem = new EarthBending();
 }
-
 // Destructor: Cleanup pointer to prevent memory leaks
 NPCEarthBender::~NPCEarthBender() {
     delete earthBendingSystem;
     // Free memory allocated in constructor
 }
-
 /// use bending system to perform an earth bending action
 void NPCEarthBender::performAction(FighterCharacter& target) {
     util::printColor("\n[AI] " + name + " performs an Earth Bending action!\n", util::FG_CYAN);
@@ -48,14 +43,12 @@ void NPCEarthBender::performAction(FighterCharacter& target) {
             break;
     }
 }
-
 /// Print EarthBender-specific stats in addition to base stats
 void NPCEarthBender::printStats() {
     NPCharacter::printStats();
     util::printColor("Profession: EarthBender\n", util::FG_MAGENTA);
     cout << "------------------------------------" << endl;
 }
-
 /// EarthBender-specific greeting
 void NPCEarthBender::greet() const {
     util::printColor(name + " the EarthBender: ", util::FG_MAGENTA);
