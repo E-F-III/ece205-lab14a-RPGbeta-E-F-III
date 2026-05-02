@@ -9,6 +9,7 @@
 #include <string>
 #include "GameCharacter.hpp"
 #include "PlayerCharacter.hpp"
+#include "util/TextDisplay.hpp"
 
 using namespace std;
 

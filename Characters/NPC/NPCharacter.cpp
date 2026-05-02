@@ -12,6 +12,7 @@
 #include <random>
 #include "GameCharacter.hpp"
 #include "NPCharacter.hpp"
+#include "util/TextDisplay.hpp"
 
 using namespace std;
 
