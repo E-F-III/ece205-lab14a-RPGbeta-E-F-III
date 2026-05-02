@@ -3,23 +3,19 @@
 #include <thread>
 #include <chrono>
 #include "util/TextDisplay.hpp"
-
 // Constructor
 BattleManager::BattleManager(std::vector<FighterCharacter*> p, std::vector<FighterCharacter*> e)
     : players(p), enemies(e) {}
-
 // Destructor
 BattleManager::~BattleManager() {
     // Per your note: main handles cleanup or characters are shared.
 }
-
 bool BattleManager::isPartyAlive(const std::vector<FighterCharacter*>& party) {
     for (auto* c : party) {
         if (c->getHealth() > 0) return true;
     }
     return false;
 }
-
 void BattleManager::displayHealth() {
     util::clearScreen(); // Keeps the console from scrolling infinitely
     util::printColor("\n========== HEALTH STATUS ==========\n", util::FG_CYAN);
@@ -30,7 +26,6 @@ void BattleManager::displayHealth() {
         util::printProgressBar(p->getHealth(), 100, '#', util::FG_GREEN);
         std::cout << " (HP: " << p->getHealth() << ")\n";
     }
-
     std::cout << "\nEnemies:\n";
     for (auto e : enemies) {
         std::cout << " - " << e->getName() << " ";
@@ -39,17 +34,14 @@ void BattleManager::displayHealth() {
     }
     util::printColor("===================================\n", util::FG_CYAN);
 }
-
 FighterCharacter* BattleManager::getRandomAliveMember(std::vector<FighterCharacter*>& party) {
     std::vector<FighterCharacter*> aliveMembers;
     for (auto member : party) {
         if (member->getHealth() > 0) aliveMembers.push_back(member);
     }
-
     if (aliveMembers.empty()) return nullptr;
     return aliveMembers[rand() % aliveMembers.size()];
 }
-
 void BattleManager::runBattle() {
     while (isPartyAlive(players) && isPartyAlive(enemies)) {
         displayHealth();
@@ -62,14 +54,12 @@ void BattleManager::runBattle() {
             if (isPartyAlive(players)) performTurn(e, enemies, players, true);
         }
     }
-
     if (isPartyAlive(players)) {
         util::printColor("\n★★★ VICTORY! ★★★\n", util::FG_YELLOW);
     } else {
         util::printColor("\n ☠  DEFEAT...  ☠ \n", util::FG_RED);
     }
 }
-
 void BattleManager::performTurn(FighterCharacter* attacker,
                                 std::vector<FighterCharacter*>& allies,
                                 std::vector<FighterCharacter*>& enemies,
@@ -79,7 +69,6 @@ void BattleManager::performTurn(FighterCharacter* attacker,
     std::string turnMsg = "\n>> " + attacker->getName() + "'s turn!\n";
     util::printColor(turnMsg, util::FG_MAGENTA);
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
-
     FighterCharacter* finalTarget = nullptr;
     if (isNPC) {
         // AI Logic: 80% Attack, 20% Support
@@ -98,7 +87,6 @@ void BattleManager::performTurn(FighterCharacter* attacker,
             std::cin.ignore(1000, '\n');
         }
         std::vector<FighterCharacter*>& potentialTargets = (choice == 0) ? enemies : allies;
-
         for (size_t i = 0; i < potentialTargets.size(); i++) {
             std::cout << i << ": " << potentialTargets[i]->getName()
                       << " (HP: " << potentialTargets[i]->getHealth() << ")\n";
