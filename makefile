@@ -22,6 +22,7 @@ SRCS := main.cpp \
         Characters/PlayerControlled/FireBender.cpp \
         Characters/PlayerControlled/PlayerCharacter.cpp \
         Characters/PlayerControlled/WaterBender.cpp \
+        Characters/NPC/NPCharacter.cpp \
         Characters/NPC/NPCAirBender.cpp \
         Characters/NPC/NPCEarthBender.cpp \
         Characters/NPC/NPCFireBender.cpp \
@@ -50,7 +51,6 @@ all: $(OBJ_DIR) $(TARGET)
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 	@echo "Build successful: ./$(TARGET)"
-# Note: The lines above must be prefixed by a TAB character.
 
 # ===========================================================
 # Compile rules — create obj subdirs as needed
@@ -58,19 +58,16 @@ $(TARGET): $(OBJS)
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
-# Note: The lines above must be prefixed by a TAB character.
 
 # Create top-level obj dir
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
-# Note: The line above must be prefixed by a TAB character.
 
 # ===========================================================
 # Run the program
 # ===========================================================
 run: $(TARGET)
 	./$(TARGET)
-# Note: The line above must be prefixed by a TAB character.
 
 # ===========================================================
 # Remove build artifacts
@@ -78,12 +75,10 @@ run: $(TARGET)
 clean:
 	rm -rf $(OBJ_DIR) $(TARGET)
 	@echo "Cleaned up build artifacts."
-# Note: Both lines above must be prefixed by a TAB character.
 
 # ===========================================================
 # Rebuild from scratch
 # ===========================================================
 rebuild: clean all
-# Note: This section is correct as it contains no commands.
 
 .PHONY: all run clean rebuild
