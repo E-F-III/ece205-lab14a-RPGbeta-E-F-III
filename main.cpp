@@ -8,21 +8,17 @@
 #include "Characters/PlayerControlled/EarthBender.hpp"
 #include "Characters/PlayerControlled/FireBender.hpp"
 #include "Characters/PlayerControlled/WaterBender.hpp"
-#include "Characters/NPC/NPCAirBender.hpp"
-#include "Characters/NPC/NPCEarthBender.hpp"
-#include "Characters/NPC/NPCFireBender.hpp"
-#include "Characters/NPC/NPCWaterBender.hpp"
-#include "BattleManager/BattleManager.hpp"
+
 
 using namespace std;
 
-// --- Helper Functions (Factory Pattern) ---
+
 PlayerCharacter* createPlayer(int i) {
     string name;
     int code;
     util::printColor("\n[ Player Creation " + to_string(i + 1) + " ]\n", util::FG_CYAN);
     cout << "Enter name: ";
-    cin.ignore(1000, '\n');
+    if(i == 0) cin.ignore(1000, '\n'); 
     getline(cin, name);
     
     cout << "Bending (0:Air, 1:Earth, 2:Fire, 3:Water): ";
@@ -44,20 +40,21 @@ PlayerCharacter* createPlayer(int i) {
     return newPlayer;
 }
 
+
 int main() {
-    // 0. Initial Terminal Prep
     util::clearScreen();
     srand(static_cast<unsigned int>(time(NULL)));
 
-    // 1. Load Data Layer
+
     string jsonFileName = "util/story_config.json";
     GameData gameStorage(jsonFileName);
 
+
     util::printColor("=========================================\n", util::FG_MAGENTA);
-    util::printType("      Dungeon Chronicle Beta Test Run      \n", 30);
+    util::printType("        Dungeon Chronicle Beta Test Run     \n", 30);
     util::printColor("=========================================\n", util::FG_MAGENTA);
 
-    // 2. Setup Party
+
     vector<FighterCharacter*> party;
     cout << "\nHow many players? (1-4): ";
     int numPlayers = 0;
@@ -67,31 +64,32 @@ int main() {
         cout << "Invalid. Try 1-4: ";
     }
 
+
     for (int i = 0; i < numPlayers; i++) {
         party.push_back(createPlayer(i));
     }
 
-    // 3. CORE IMPLEMENTATION
+
+    // Starting in fire_nation for testing
     string activeRegion = "fire_nation"; 
     DungeonSystem dungeon(activeRegion, &gameStorage, party);
     
     util::printColor("\n--- STARTING DUNGEON TRAVERSAL ---\n", util::FG_YELLOW);
     int result = dungeon.runDungeon();
 
-    // 4. Handle Ending
-    // Success condition: runDungeon returned 1 and party is alive
+
+    // Check health properly to avoid the precedence warning
     if (result == 1 && party[0]->getHealth() > 0) {
         util::printColor("\n\n★★★ SUCCESS! Dungeon Cleared! ★★★\n", util::FG_GREEN);
     } 
-    // Failure condition: Party health dropped to 0 or below
     else if (party[0]->getHealth() <= 0) {
         util::printColor("\n\n DEFEAT... You succumbed to the forces of the dungeon.\n", util::FG_RED);
     } 
     else {
-        util::printColor("\n\n[TEST WARNING] Dungeon run completed but final status is ambiguous.\n", util::FG_YELLOW);
+        util::printColor("\n\n[TEST WARNING] Dungeon run ended. Result: " + to_string(result) + "\n", util::FG_YELLOW);
     }
 
-    // Cleanup
+
     for (auto p : party) delete p;
     return 0;
 }
