@@ -7,9 +7,13 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include <iostream>
+#include <fstream> // needed for file I/O to read the story data
 #include <vector>
 #include <string>
 #include <ctime>
+
+// Include the third party json parser
+#include "json.hpp"
 
 // Include the Manager
 #include "BattleManager.hpp"
@@ -28,6 +32,20 @@
 #include "util/TextDisplay.hpp"
 
 using namespace std;
+
+// --- Parse the data from the json file ---
+nlohmann::json storyData; 
+
+void loadStoryData() {
+    ifstream file("util/story_config.json");
+    if (file.is_open()) {
+        file >> storyData;
+        file.close();
+    } else {
+        cerr << "Error: Could not open story_config.json" << endl;
+        exit(1);
+    }
+}
 
 // --- Helper Functions (Factory Pattern) ---
 
@@ -79,12 +97,15 @@ NPCharacter* createNPC(int i) {
 // --- Main Execution ---
 
 int main() {
+    loadStoryData(); // Load the story data from the JSON file at the start of the program
+
+    cout << storyData["regions"] << endl; // Display the intro story text
     // 0. Initial Terminal Prep
     util::clearScreen();
     srand(static_cast<unsigned int>(time(NULL)));
 
     util::printColor("=========================================\n", util::FG_MAGENTA);
-    util::printColor("       WELCOME TO THE BENDING ARENA      \n", util::BOLD);
+    util::printColor("           AVATAR: TERMINAL ELEMENTS     \n", util::BOLD);
     util::printColor("=========================================\n", util::FG_MAGENTA);
 
     int numPlayers, numEnemies;

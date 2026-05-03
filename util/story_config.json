@@ -1,0 +1,462 @@
+{
+  "config": {
+    "starting_scene": "scene_prologue_choose_world",
+    "starting_gold": 50,
+    "starting_health": 100,
+    "max_health": 100,
+    "rules": {
+      "home_region_locked_first": true,
+      "regions_required_to_unlock_final": 4,
+      "lose_battle": "restart",
+      "lose_final": "bad_ending",
+      "win_final": "good_ending"
+    }
+  },
+
+  "regions": [
+    {
+      "id": "fire_nation",
+      "name": "Fire Nation",
+      "disturbance": "Uncontrolled wildfires",
+      "hub_scene": "scene_fire_nation_hub",
+      "win_scene": "scene_fire_nation_win_dialogue",
+      "locations": {
+        "train":   "scene_fire_nation_training",
+        "store":   "scene_fire_nation_store",
+        "inn":     "scene_fire_nation_inn",
+        "dungeon": "scene_fire_nation_dungeon_entrance"
+      },
+      "dungeon_name": "Wildfire Catacombs",
+      "minion": { "id": "enemy_fire_nation_minion", "name": "Corrupted Firebender", "hp": 80 },
+      "boss":   { "id": "boss_fire_nation",         "name": "Blazing Warden",        "hp": 120 }
+    },
+    {
+      "id": "water_tribe",
+      "name": "Water Tribe Village",
+      "disturbance": "Frozen spirits attacking",
+      "hub_scene": "scene_water_tribe_hub",
+      "win_scene": "scene_water_tribe_win_dialogue",
+      "locations": {
+        "train":   "scene_water_tribe_training",
+        "store":   "scene_water_tribe_store",
+        "inn":     "scene_water_tribe_inn",
+        "dungeon": "scene_water_tribe_dungeon_entrance"
+      },
+      "dungeon_name": "Frozen Spirit Cavern",
+      "minion": { "id": "enemy_water_tribe_minion", "name": "Corrupted Waterbender",  "hp": 80 },
+      "boss":   { "id": "boss_water_tribe",         "name": "Frozen Spirit Keeper",   "hp": 120 }
+    },
+    {
+      "id": "earth_kingdom",
+      "name": "Earth Kingdom",
+      "disturbance": "Earthquakes and rogue golems",
+      "hub_scene": "scene_earth_kingdom_hub",
+      "win_scene": "scene_earth_kingdom_win_dialogue",
+      "locations": {
+        "train":   "scene_earth_kingdom_training",
+        "store":   "scene_earth_kingdom_store",
+        "inn":     "scene_earth_kingdom_inn",
+        "dungeon": "scene_earth_kingdom_dungeon_entrance"
+      },
+      "dungeon_name": "Quaking Golem Mines",
+      "minion": { "id": "enemy_earth_kingdom_minion", "name": "Corrupted Earthbender", "hp": 80 },
+      "boss":   { "id": "boss_earth_kingdom",         "name": "Rogue Stone Golem",     "hp": 120 }
+    },
+    {
+      "id": "air_temple",
+      "name": "Air Temple",
+      "disturbance": "Corrupted spiritual winds",
+      "hub_scene": "scene_air_temple_hub",
+      "win_scene": "scene_air_temple_win_dialogue",
+      "locations": {
+        "train":   "scene_air_temple_training",
+        "store":   "scene_air_temple_store",
+        "inn":     "scene_air_temple_inn",
+        "dungeon": "scene_air_temple_dungeon_entrance"
+      },
+      "dungeon_name": "Temple of Twisted Winds",
+      "minion": { "id": "enemy_air_temple_minion", "name": "Corrupted Airbender", "hp": 80 },
+      "boss":   { "id": "boss_air_temple",         "name": "Tempest Monk",        "hp": 120 }
+    }
+  ],
+
+  "final_boss": {
+    "id": "boss_corrupted_avatar_cycle",
+    "name": "Corrupted Bender",
+    "hp": 180,
+    "scene": "scene_final_battle",
+    "on_win": "scene_good_ending",
+    "on_lose": "scene_bad_ending"
+  },
+
+  "items": [
+    { "id": "healing_tea",     "name": "Healing Tea",     "type": "consumable", "heal": 20,  "cost": 10 },
+    { "id": "training_scroll", "name": "Training Scroll", "type": "training",   "stat_bonus": 1, "cost": 15 },
+    { "id": "spirit_charm",    "name": "Spirit Charm",    "type": "key_item",   "final_battle_bonus": 2, "cost": 25 },
+    { "id": "camp_supplies",   "name": "Camp Supplies",   "type": "rest",       "heal": 30,  "cost": 12 }
+  ],
+
+  "scenes": {
+    "scene_prologue_choose_world": {
+      "type": "world_select",
+      "text": "Your journey begins. Choose your home world.",
+      "options": [
+        { "label": "Fire Nation",        "set_home": "fire_nation",   "next": "scene_monk_conversation" },
+        { "label": "Water Tribe Village","set_home": "water_tribe",   "next": "scene_monk_conversation" },
+        { "label": "Earth Kingdom",      "set_home": "earth_kingdom", "next": "scene_monk_conversation" },
+        { "label": "Air Temple",         "set_home": "air_temple",    "next": "scene_monk_conversation" }
+      ]
+    },
+
+    "scene_monk_conversation": {
+      "type": "dialogue",
+      "text": "A worried monk says: 'The Avatar cycle has been disrupted. The four nations are falling out of balance. Travel, train, and defeat the disturbances before darkness reaches the spirit realm.'",
+      "set_flag": "has_heard_monk_warning",
+      "next": "scene_region_select"
+    },
+
+    "scene_region_select": {
+      "type": "region_select",
+      "text": "Choose which region to investigate next.",
+      "note": "Filter out resolved regions and optionally the home region on first visit."
+    },
+
+    "scene_check_conflicts": {
+      "type": "condition",
+      "condition": "resolved_regions.length == 4",
+      "true_next": "scene_spirit_realm_gate",
+      "false_next": "scene_region_select"
+    },
+
+    "scene_die_restart": {
+      "type": "death",
+      "text": "You were defeated. Restarting from the beginning.",
+      "next": "scene_prologue_choose_world"
+    },
+
+    "scene_spirit_realm_gate": {
+      "type": "dialogue",
+      "text": "The air goes silent. An invisible voice whispers: 'Balance is weakness. Power comes from dominance.'",
+      "set_flag": "has_heard_invisible_voice",
+      "next": "scene_enter_spirit_realm_prompt"
+    },
+
+    "scene_enter_spirit_realm_prompt": {
+      "type": "prompt",
+      "text": "A gate opens to the spirit realm. Will you enter and face the corrupted bender?",
+      "options": [
+        { "label": "Enter the spirit realm", "next": "scene_final_battle" },
+        { "label": "Prepare more first",     "next": "scene_region_select" }
+      ]
+    },
+
+    "scene_final_battle": {
+      "type": "final_battle",
+      "text": "Inside the spirit realm, the corrupted bender waits. This is the source of the broken Avatar cycle.",
+      "enemy": "boss_corrupted_avatar_cycle",
+      "on_win": "scene_good_ending",
+      "on_lose": "scene_bad_ending"
+    },
+
+    "scene_good_ending": {
+      "type": "ending",
+      "result": "good",
+      "text": "The hero defeats the corrupted bender. The Avatar cycle begins to heal. Balance is restored."
+    },
+
+    "scene_bad_ending": {
+      "type": "ending",
+      "result": "bad",
+      "text": "The hero falls. Terror spreads to the villages. The Avatar cycle is lost.",
+      "next": "scene_prologue_choose_world"
+    },
+
+    "scene_fire_nation_hub": {
+      "type": "hub",
+      "region": "fire_nation",
+      "text": "You arrive in the Fire Nation. Disturbance: Uncontrolled wildfires.",
+      "options": [
+        { "label": "Train",        "next": "scene_fire_nation_training" },
+        { "label": "Visit Store",  "next": "scene_fire_nation_store" },
+        { "label": "Rest at Inn",  "next": "scene_fire_nation_inn" },
+        { "label": "Enter Dungeon","next": "scene_fire_nation_dungeon_entrance" }
+      ]
+    },
+    "scene_fire_nation_training": {
+      "type": "training",
+      "region": "fire_nation",
+      "actions": [
+        { "id": "train_all_elements", "bonus": { "all_elements": 1 } },
+        { "id": "train_all_stats",    "bonus": { "strength": 1, "agility": 1, "defense": 1 } }
+      ],
+      "back": "scene_fire_nation_hub"
+    },
+    "scene_fire_nation_store": {
+      "type": "store",
+      "region": "fire_nation",
+      "inventory": ["healing_tea", "training_scroll", "spirit_charm", "camp_supplies"],
+      "back": "scene_fire_nation_hub"
+    },
+    "scene_fire_nation_inn": {
+      "type": "inn",
+      "region": "fire_nation",
+      "cost": 8,
+      "effect": { "restore_health": "max_health" },
+      "back": "scene_fire_nation_hub"
+    },
+    "scene_fire_nation_dungeon_entrance": {
+      "type": "dungeon_room",
+      "region": "fire_nation",
+      "room": 1,
+      "text": "You enter Wildfire Catacombs. The disturbance grows stronger deeper inside.",
+      "next": "scene_fire_nation_battle_room"
+    },
+    "scene_fire_nation_battle_room": {
+      "type": "battle",
+      "region": "fire_nation",
+      "room": 2,
+      "enemy": "enemy_fire_nation_minion",
+      "on_win": "scene_fire_nation_camp_room",
+      "on_lose": "scene_die_restart"
+    },
+    "scene_fire_nation_camp_room": {
+      "type": "rest",
+      "region": "fire_nation",
+      "room": 3,
+      "text": "You find a quiet camp spot. Rest and prepare for the boss.",
+      "effect": { "restore_health": 30 },
+      "next": "scene_fire_nation_boss_fight"
+    },
+    "scene_fire_nation_boss_fight": {
+      "type": "boss_battle",
+      "region": "fire_nation",
+      "room": 4,
+      "enemy": "boss_fire_nation",
+      "on_win": "scene_fire_nation_win_dialogue",
+      "on_lose": "scene_die_restart"
+    },
+    "scene_fire_nation_win_dialogue": {
+      "type": "dialogue",
+      "region": "fire_nation",
+      "text": "The wildfires calm into warm embers. The Fire Nation villagers cheer.",
+      "set_flag": "mark_region_resolved:fire_nation",
+      "next": "scene_check_conflicts"
+    },
+
+    "scene_water_tribe_hub": {
+      "type": "hub",
+      "region": "water_tribe",
+      "text": "You arrive in the Water Tribe Village. Disturbance: Frozen spirits attacking.",
+      "options": [
+        { "label": "Train",        "next": "scene_water_tribe_training" },
+        { "label": "Visit Store",  "next": "scene_water_tribe_store" },
+        { "label": "Rest at Inn",  "next": "scene_water_tribe_inn" },
+        { "label": "Enter Dungeon","next": "scene_water_tribe_dungeon_entrance" }
+      ]
+    },
+    "scene_water_tribe_training": {
+      "type": "training",
+      "region": "water_tribe",
+      "actions": [
+        { "id": "train_all_elements", "bonus": { "all_elements": 1 } },
+        { "id": "train_all_stats",    "bonus": { "strength": 1, "agility": 1, "defense": 1 } }
+      ],
+      "back": "scene_water_tribe_hub"
+    },
+    "scene_water_tribe_store": {
+      "type": "store",
+      "region": "water_tribe",
+      "inventory": ["healing_tea", "training_scroll", "spirit_charm", "camp_supplies"],
+      "back": "scene_water_tribe_hub"
+    },
+    "scene_water_tribe_inn": {
+      "type": "inn",
+      "region": "water_tribe",
+      "cost": 8,
+      "effect": { "restore_health": "max_health" },
+      "back": "scene_water_tribe_hub"
+    },
+    "scene_water_tribe_dungeon_entrance": {
+      "type": "dungeon_room",
+      "region": "water_tribe",
+      "room": 1,
+      "text": "You enter Frozen Spirit Cavern. The disturbance grows stronger deeper inside.",
+      "next": "scene_water_tribe_battle_room"
+    },
+    "scene_water_tribe_battle_room": {
+      "type": "battle",
+      "region": "water_tribe",
+      "room": 2,
+      "enemy": "enemy_water_tribe_minion",
+      "on_win": "scene_water_tribe_camp_room",
+      "on_lose": "scene_die_restart"
+    },
+    "scene_water_tribe_camp_room": {
+      "type": "rest",
+      "region": "water_tribe",
+      "room": 3,
+      "text": "You find a quiet camp spot. Rest and prepare for the boss.",
+      "effect": { "restore_health": 30 },
+      "next": "scene_water_tribe_boss_fight"
+    },
+    "scene_water_tribe_boss_fight": {
+      "type": "boss_battle",
+      "region": "water_tribe",
+      "room": 4,
+      "enemy": "boss_water_tribe",
+      "on_win": "scene_water_tribe_win_dialogue",
+      "on_lose": "scene_die_restart"
+    },
+    "scene_water_tribe_win_dialogue": {
+      "type": "dialogue",
+      "region": "water_tribe",
+      "text": "The spirits melt back into peaceful forms. Moonlight returns to the frozen village.",
+      "set_flag": "mark_region_resolved:water_tribe",
+      "next": "scene_check_conflicts"
+    },
+
+    "scene_earth_kingdom_hub": {
+      "type": "hub",
+      "region": "earth_kingdom",
+      "text": "You arrive in the Earth Kingdom. Disturbance: Earthquakes and rogue golems.",
+      "options": [
+        { "label": "Train",        "next": "scene_earth_kingdom_training" },
+        { "label": "Visit Store",  "next": "scene_earth_kingdom_store" },
+        { "label": "Rest at Inn",  "next": "scene_earth_kingdom_inn" },
+        { "label": "Enter Dungeon","next": "scene_earth_kingdom_dungeon_entrance" }
+      ]
+    },
+    "scene_earth_kingdom_training": {
+      "type": "training",
+      "region": "earth_kingdom",
+      "actions": [
+        { "id": "train_all_elements", "bonus": { "all_elements": 1 } },
+        { "id": "train_all_stats",    "bonus": { "strength": 1, "agility": 1, "defense": 1 } }
+      ],
+      "back": "scene_earth_kingdom_hub"
+    },
+    "scene_earth_kingdom_store": {
+      "type": "store",
+      "region": "earth_kingdom",
+      "inventory": ["healing_tea", "training_scroll", "spirit_charm", "camp_supplies"],
+      "back": "scene_earth_kingdom_hub"
+    },
+    "scene_earth_kingdom_inn": {
+      "type": "inn",
+      "region": "earth_kingdom",
+      "cost": 8,
+      "effect": { "restore_health": "max_health" },
+      "back": "scene_earth_kingdom_hub"
+    },
+    "scene_earth_kingdom_dungeon_entrance": {
+      "type": "dungeon_room",
+      "region": "earth_kingdom",
+      "room": 1,
+      "text": "You enter Quaking Golem Mines. The disturbance grows stronger deeper inside.",
+      "next": "scene_earth_kingdom_battle_room"
+    },
+    "scene_earth_kingdom_battle_room": {
+      "type": "battle",
+      "region": "earth_kingdom",
+      "room": 2,
+      "enemy": "enemy_earth_kingdom_minion",
+      "on_win": "scene_earth_kingdom_camp_room",
+      "on_lose": "scene_die_restart"
+    },
+    "scene_earth_kingdom_camp_room": {
+      "type": "rest",
+      "region": "earth_kingdom",
+      "room": 3,
+      "text": "You find a quiet camp spot. Rest and prepare for the boss.",
+      "effect": { "restore_health": 30 },
+      "next": "scene_earth_kingdom_boss_fight"
+    },
+    "scene_earth_kingdom_boss_fight": {
+      "type": "boss_battle",
+      "region": "earth_kingdom",
+      "room": 4,
+      "enemy": "boss_earth_kingdom",
+      "on_win": "scene_earth_kingdom_win_dialogue",
+      "on_lose": "scene_die_restart"
+    },
+    "scene_earth_kingdom_win_dialogue": {
+      "type": "dialogue",
+      "region": "earth_kingdom",
+      "text": "The mines stop shaking. The golems return to still stone. The Earth Kingdom road opens again.",
+      "set_flag": "mark_region_resolved:earth_kingdom",
+      "next": "scene_check_conflicts"
+    },
+
+    "scene_air_temple_hub": {
+      "type": "hub",
+      "region": "air_temple",
+      "text": "You arrive at the Air Temple. Disturbance: Corrupted spiritual winds.",
+      "options": [
+        { "label": "Train",        "next": "scene_air_temple_training" },
+        { "label": "Visit Store",  "next": "scene_air_temple_store" },
+        { "label": "Rest at Inn",  "next": "scene_air_temple_inn" },
+        { "label": "Enter Dungeon","next": "scene_air_temple_dungeon_entrance" }
+      ]
+    },
+    "scene_air_temple_training": {
+      "type": "training",
+      "region": "air_temple",
+      "actions": [
+        { "id": "train_all_elements", "bonus": { "all_elements": 1 } },
+        { "id": "train_all_stats",    "bonus": { "strength": 1, "agility": 1, "defense": 1 } }
+      ],
+      "back": "scene_air_temple_hub"
+    },
+    "scene_air_temple_store": {
+      "type": "store",
+      "region": "air_temple",
+      "inventory": ["healing_tea", "training_scroll", "spirit_charm", "camp_supplies"],
+      "back": "scene_air_temple_hub"
+    },
+    "scene_air_temple_inn": {
+      "type": "inn",
+      "region": "air_temple",
+      "cost": 8,
+      "effect": { "restore_health": "max_health" },
+      "back": "scene_air_temple_hub"
+    },
+    "scene_air_temple_dungeon_entrance": {
+      "type": "dungeon_room",
+      "region": "air_temple",
+      "room": 1,
+      "text": "You enter Temple of Twisted Winds. The disturbance grows stronger deeper inside.",
+      "next": "scene_air_temple_battle_room"
+    },
+    "scene_air_temple_battle_room": {
+      "type": "battle",
+      "region": "air_temple",
+      "room": 2,
+      "enemy": "enemy_air_temple_minion",
+      "on_win": "scene_air_temple_camp_room",
+      "on_lose": "scene_die_restart"
+    },
+    "scene_air_temple_camp_room": {
+      "type": "rest",
+      "region": "air_temple",
+      "room": 3,
+      "text": "You find a quiet camp spot. Rest and prepare for the boss.",
+      "effect": { "restore_health": 30 },
+      "next": "scene_air_temple_boss_fight"
+    },
+    "scene_air_temple_boss_fight": {
+      "type": "boss_battle",
+      "region": "air_temple",
+      "room": 4,
+      "enemy": "boss_air_temple",
+      "on_win": "scene_air_temple_win_dialogue",
+      "on_lose": "scene_die_restart"
+    },
+    "scene_air_temple_win_dialogue": {
+      "type": "dialogue",
+      "region": "air_temple",
+      "text": "The twisted winds become calm breezes. Prayer flags move peacefully over the temple again.",
+      "set_flag": "mark_region_resolved:air_temple",
+      "next": "scene_check_conflicts"
+    }
+  }
+}
