@@ -1,5 +1,5 @@
 # ===========================================================
-# Makefile for ECE205 Lab 13a - Game Battle
+# Makefile for ECE 205 Lab 14a - RPG Beta (Dungeon Expansion)
 # ===========================================================
 CXX      := g++
 CXXFLAGS := -Wall -Wextra -std=c++17 -g
@@ -25,50 +25,65 @@ SRCS := main.cpp \
         Characters/NPC/NPCAirBender.cpp \
         Characters/NPC/NPCEarthBender.cpp \
         Characters/NPC/NPCFireBender.cpp \
-        Characters/NPC/NPCharacter.cpp \
         Characters/NPC/NPCWaterBender.cpp \
-        BattleManager/BattleManager.cpp
+        BattleManager/BattleManager.cpp \
+        GameLogic/GameData.cpp \
+        GameLogic/DungeonSystem.cpp
 # ===========================================================
 # Object files (mirrors source paths under obj/)
 # ===========================================================
 OBJS := $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRCS))
-# Include paths
+# Include paths - IMPORTANT: Added -IGameLogic and -Iutil for JSON
 INCLUDES := -I. \
             -Iutil \
             -ICharacters \
             -ICharacters/BendingSystem \
             -ICharacters/PlayerControlled \
             -ICharacters/NPC \
-            -IBattleManager
+            -IBattleManager \
+            -IGameLogic
 # ===========================================================
 # Default target
 # ===========================================================
 all: $(OBJ_DIR) $(TARGET)
+
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^
 	@echo "Build successful: ./$(TARGET)"
+# Note: The lines above must be prefixed by a TAB character.
+
 # ===========================================================
 # Compile rules — create obj subdirs as needed
 # ===========================================================
 $(OBJ_DIR)/%.o: %.cpp
 	@mkdir -p $(dir $@)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
+# Note: The lines above must be prefixed by a TAB character.
+
 # Create top-level obj dir
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+# Note: The line above must be prefixed by a TAB character.
+
 # ===========================================================
 # Run the program
 # ===========================================================
 run: $(TARGET)
 	./$(TARGET)
+# Note: The line above must be prefixed by a TAB character.
+
 # ===========================================================
 # Remove build artifacts
 # ===========================================================
 clean:
 	rm -rf $(OBJ_DIR) $(TARGET)
 	@echo "Cleaned up build artifacts."
+# Note: Both lines above must be prefixed by a TAB character.
+
 # ===========================================================
 # Rebuild from scratch
 # ===========================================================
 rebuild: clean all
+# Note: This section is correct as it contains no commands.
+
 .PHONY: all run clean rebuild
