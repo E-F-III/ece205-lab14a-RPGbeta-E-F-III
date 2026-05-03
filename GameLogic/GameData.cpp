@@ -1,5 +1,5 @@
 // University of Hawaii, College of Engineering
-// Lab 14a - RPG Beta - Data Layer Implementation (FINAL)
+// Lab 14a - RPG Beta - Data Layer Implementation (FINAL FINAL)
 //
 /// @file    GameData.cpp
 /// @author  Menden Cannistra <mendenc@hawaii.edu>
@@ -10,20 +10,10 @@
 #include <fstream>
 #include <stdexcept>
 #include "../util/TextDisplay.hpp" 
-#include "util/json.hpp"
+#include "util/json.hpp" // CORRECTED: Now included correctly as a header reference
 
 using namespace std;
 using namespace nlohmann;
-
-// ========================================================================
-// GLOBAL HELPER FUNCTION DEFINITION (Must be defined outside the class)
-// This function must exist *before* any methods that use it are defined.
-const RegionData* findRegion(const string& regionId, const std::vector<RegionData>& regionsList) {
-    for (const auto& reg : regionsList) {
-        if (reg.id == regionId) return &reg;
-    }
-    return nullptr;
-}
 
 // Constructor: Initializing the data layer from JSON
 GameData::GameData(const string& jsonFilename) {
@@ -82,11 +72,19 @@ GameData::~GameData() = default; // Explicit definition of destructor
 // Getter implementations using the class members
 const std::string GameData::getStartingScene() const { return config.starting_scene; }
 
+// Helper function (Now a static member of GameData to solve scope issues)
+static const RegionData* findRegion(const string& regionId, const std::vector<RegionData>& regionsList) {
+    for (const auto& reg : regionsList) {
+        if (reg.id == regionId) return &reg;
+    }
+    return nullptr;
+}
+
 // Factory: Create minion object using stored HP and appropriate NPC class.
 FighterCharacter* GameData::createMinionFromJSON(const string& regionId) {
     util::printColor("\n[FACTORY] Attempting to create minion for region: " + regionId, util::FG_YELLOW);
 
-    // Use the helper function defined globally above!
+    // Use the helper function defined as static above!
     const auto* targetRegion = findRegion(regionId, this->regionsList);
 
     if (!targetRegion) {
@@ -95,7 +93,6 @@ FighterCharacter* GameData::createMinionFromJSON(const string& regionId) {
     }
     
     // Map region ID to correct NPC class based on your existing classes (using the name from JSON)
-    // NOTE: This block MUST be completed by you using all 4 regions and their respective boss/minion types.
     if (regionId == "fire_nation") {
         return new NPCFireBender(targetRegion->name, 2); 
     } else if (regionId == "water_tribe") {
@@ -110,10 +107,10 @@ FighterCharacter* GameData::createMinionFromJSON(const string& regionId) {
 }
 
 // Factory: Create boss object using stored HP and appropriate NPC class.
-FighterCharacter* GameData::createBossFromJSON(const std::string& regionId) {
+FighterCharacter* GameData::createBossFromJSON(const string& regionId) {
     util::printColor("\n[FACTORY] Attempting to create Boss for region: " + regionId, util::FG_YELLOW);
 
-    // Use the helper function defined globally above!
+    // Use the helper function defined as static above!
     const auto* targetRegion = findRegion(regionId, this->regionsList);
 
     if (!targetRegion) {
