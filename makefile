@@ -5,7 +5,7 @@
 CXX      := g++
 CXXFLAGS := -Wall -Wextra -std=c++17 -g
 
-TARGET   := game_battle
+TARGET   := game
 OBJ_DIR  := obj
 
 # ===========================================================

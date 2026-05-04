@@ -79,7 +79,7 @@ make
 
 ### Run
 ```bash
-./game_battle
+./game
 ```
 
 ### Clean
