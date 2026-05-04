@@ -17,7 +17,8 @@ public:
     WaterBending();
     void healingWaters(FighterCharacter& character, FighterCharacter& target);
     void waterWhip(FighterCharacter& character, FighterCharacter& target);
-    void iceBarrier(FighterCharacter& character, FighterCharacter& target);
+    void waterVortex(FighterCharacter& character, FighterCharacter& target);
+    // void iceBarrier(FighterCharacter& character, FighterCharacter& target);
     /// Display available water bending actions for a given character
     std::vector<std::string> getAvailableBendingActions(FighterCharacter& character) override; // Keep virtual and override here
 };

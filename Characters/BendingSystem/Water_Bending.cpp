@@ -41,18 +41,33 @@ void WaterBending::waterWhip(FighterCharacter& character, FighterCharacter& targ
     
     util::printColor("Water Whip deals " + std::to_string(damage) + " damage to " + target.getName() + "\n", util::FG_CYAN); 
 }
-// Ice Barrier: creates a solid barrier of ice that can block attacks and protect allies
-void WaterBending::iceBarrier(FighterCharacter& character, FighterCharacter& target) {
-    // Implementation of defense logic here (modified to protect passed player ref)
-    util::printColor(character.getName() + " uses Ice Barrier to protect " + target.getName() + "!\n", util::FG_CYAN);
+
+void waterVortex(FighterCharacter& character, FighterCharacter& target) {
+    int targetHealth = target.getHealth();
     
-    cout << "\nIce Barrier activates!" << endl;
-    cout << "Shield logic not fully implemented yet, but it will block the next incoming attack." << endl;
-    // In this simple game, ice barrier prevents immediate damage
-    target.setHealth(target.getHealth()); 
+    util::printColor(character.getName() + " summons a Water Vortex around " + target.getName() + "!\n", util::FG_CYAN);
+    cout << "\nWater Vortex hits!" << endl;
+    // Calculate damage: Higher range for vortex attack
+    int damage = FighterCharacter::rollDice(10, 18); 
+    
+    // Update health via getter/setter to ensure specific instance update
+    target.setHealth(targetHealth - damage); 
+    
+    util::printColor("Water Vortex deals " + std::to_string(damage) + " damage to " + target.getName() + "\n", util::FG_CYAN); 
 }
+// // Ice Barrier: creates a solid barrier of ice that can block attacks and protect allies
+// void WaterBending::iceBarrier(FighterCharacter& character, FighterCharacter& target) {
+//     // Implementation of defense logic here (modified to protect passed player ref)
+//     util::printColor(character.getName() + " uses Ice Barrier to protect " + target.getName() + "!\n", util::FG_CYAN);
+    
+//     cout << "\nIce Barrier activates!" << endl;
+//     cout << "Shield logic not fully implemented yet, but it will block the next incoming attack." << endl;
+//     // In this simple game, ice barrier prevents immediate damage
+//     target.setHealth(target.getHealth()); 
+// }
 std::vector<std::string> WaterBending::getAvailableBendingActions(FighterCharacter& character) {
-    vector<std::string> actions = {"Healing Waters", "Water Whip", "Ice Barrier"};
+    // vector<std::string> actions = {"Healing Waters", "Water Whip", "Ice Barrier"};
+    vector<std::string> actions = {"Healing Waters", "Water Whip", "Water Vortex"};
     
     // System output for menu listing
     cout << "Available Water Bending Actions for " + character.getName() + ":\n";

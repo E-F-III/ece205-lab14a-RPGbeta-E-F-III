@@ -16,8 +16,10 @@ public:
     /// Constructor: initializes the air bending system
     AirBending();
     void airSlice(FighterCharacter& character,FighterCharacter& target);
-    void airShield(FighterCharacter& character,FighterCharacter& target);
-    void flight(FighterCharacter& character);
+    void airBlast(FighterCharacter& character, FighterCharacter& target);
+    void tornado(FighterCharacter& character, FighterCharacter& target);
+    // void airShield(FighterCharacter& character,FighterCharacter& target);
+    // void flight(FighterCharacter& character);
     /// Display available air bending actions for a given character
     std::vector<std::string> getAvailableBendingActions(FighterCharacter& character) override; // Keep virtual and override here
 };

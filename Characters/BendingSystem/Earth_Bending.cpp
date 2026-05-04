@@ -28,15 +28,6 @@ void EarthBending::earthSpike(FighterCharacter& character, FighterCharacter& tar
     
     util::printColor("Earth Spike deals " + std::to_string(damage) + " damage to " + target.getName() + "\n", util::FG_MAGENTA); 
 }
-// Rock Shield: creates a sturdy shield of rock that can block attacks
-void EarthBending::rockShield(FighterCharacter& character, FighterCharacter& target) {
-    util::printColor(character.getName() + " uses Rock Shield to protect " + target.getName() + "!\n", util::FG_MAGENTA);
-    
-    cout << "\nRock Shield activates!" << endl;
-    cout << "Shield logic not fully implemented yet, but it will block the next incoming attack." << endl;
-    // In this simple game, shielding prevents immediate damage
-    target.setHealth(target.getHealth()); 
-}
 // Seismic Slam: slams the ground to create a shockwave that damages and knocks back enemies
 void EarthBending::seismicSlam(FighterCharacter& character, FighterCharacter& target) {
     util::printColor(character.getName() + " uses Seismic Slam on " + target.getName() + "!\n", util::FG_MAGENTA);
@@ -52,8 +43,34 @@ void EarthBending::seismicSlam(FighterCharacter& character, FighterCharacter& ta
     
     util::printColor("Seismic Slam deals " + std::to_string(damage) + " damage to " + target.getName() + "\n", util::FG_MAGENTA); 
 }
+
+void EarthBending::rockThrow(FighterCharacter& character, FighterCharacter& target) {
+    util::printColor(character.getName() + " uses Rock Throw on " + target.getName() + "!\n", util::FG_MAGENTA);
+    
+    cout << "\nRock Throw hits!" << endl;
+    int targetHealth = target.getHealth();
+    
+    // Calculate damage: Moderate damage for rock throw
+    int damage = FighterCharacter::rollDice(6, 12); 
+    
+    // Update health via getter/setter to ensure specific instance update
+    target.setHealth(targetHealth - damage); 
+    
+    util::printColor("Rock Throw deals " + std::to_string(damage) + " damage to " + target.getName() + "\n", util::FG_MAGENTA); 
+}
+
+// // Rock Shield: creates a sturdy shield of rock that can block attacks
+// void EarthBending::rockShield(FighterCharacter& character, FighterCharacter& target) {
+//     util::printColor(character.getName() + " uses Rock Shield to protect " + target.getName() + "!\n", util::FG_MAGENTA);
+    
+//     cout << "\nRock Shield activates!" << endl;
+//     cout << "Shield logic not fully implemented yet, but it will block the next incoming attack." << endl;
+//     // In this simple game, shielding prevents immediate damage
+//     target.setHealth(target.getHealth()); 
+// }
 std::vector<std::string> EarthBending::getAvailableBendingActions(FighterCharacter& character) {
-    vector<std::string> actions = {"Earth Spike", "Rock Shield", "Seismic Slam"};
+    // vector<std::string> actions = {"Earth Spike", "Rock Shield", "Seismic Slam"};
+    vector<std::string> actions = {"Earth Spike", "Rock Throw", "Seismic Slam"};
     
     cout << "Available Earth Bending Actions for " + character.getName() + ":\n";
     for (size_t i = 0; i < actions.size(); ++i) {

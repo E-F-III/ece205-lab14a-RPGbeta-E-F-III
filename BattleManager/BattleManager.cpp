@@ -7,15 +7,15 @@
 BattleManager::BattleManager(std::vector<FighterCharacter*> p, std::vector<FighterCharacter*> e)
     : players(p), enemies(e) {}
 // Destructor
-BattleManager::~BattleManager() {
-    // Per your note: main handles cleanup or characters are shared.
-}
+BattleManager::~BattleManager() {}
+
 bool BattleManager::isPartyAlive(const std::vector<FighterCharacter*>& party) {
     for (auto* c : party) {
         if (c->getHealth() > 0) return true;
     }
     return false;
 }
+
 void BattleManager::displayHealth() {
     util::clearScreen(); // Keeps the console from scrolling infinitely
     util::printColor("\n========== HEALTH STATUS ==========\n", util::FG_CYAN);
@@ -34,6 +34,7 @@ void BattleManager::displayHealth() {
     }
     util::printColor("===================================\n", util::FG_CYAN);
 }
+
 FighterCharacter* BattleManager::getRandomAliveMember(std::vector<FighterCharacter*>& party) {
     std::vector<FighterCharacter*> aliveMembers;
     for (auto member : party) {
@@ -42,6 +43,7 @@ FighterCharacter* BattleManager::getRandomAliveMember(std::vector<FighterCharact
     if (aliveMembers.empty()) return nullptr;
     return aliveMembers[rand() % aliveMembers.size()];
 }
+
 void BattleManager::runBattle() {
     while (isPartyAlive(players) && isPartyAlive(enemies)) {
         displayHealth();
@@ -66,6 +68,7 @@ void BattleManager::runBattle() {
         util::printColor("\n ☠  DEFEAT...  ☠ \n", util::FG_RED);
     }
 }   
+
 void BattleManager::performTurn(FighterCharacter* attacker,
                                 std::vector<FighterCharacter*>& allies,
                                 std::vector<FighterCharacter*>& enemies,
