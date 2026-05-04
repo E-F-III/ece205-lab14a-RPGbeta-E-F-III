@@ -507,7 +507,7 @@
       "type": "dungeon_choice",
       "region": "air_temple",
       "room": 2,
-      "text": "The tunnel splits into three paths.",
+      "text": "The tunnel splits into two paths.",
       "options": [
         { "label": "Take the left path", "next": "scene_air_temple_battle_room_1" },
         { "label": "Take the right path", "next": "scene_air_temple_camp_room_1" }
