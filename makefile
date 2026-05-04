@@ -1,15 +1,17 @@
 # ===========================================================
 # Makefile for ECE 205 Lab 14a - RPG Beta (Dungeon Expansion)
 # ===========================================================
+
 CXX      := g++
 CXXFLAGS := -Wall -Wextra -std=c++17 -g
+
 TARGET   := game_battle
 OBJ_DIR  := obj
+
 # ===========================================================
 # Source files
 # ===========================================================
 SRCS := main.cpp \
-        util/TextDisplay.cpp \
         Characters/GameCharacter.cpp \
         Characters/FighterCharacter.cpp \
         Characters/BendingSystem/Air_Bending.cpp \
@@ -29,20 +31,23 @@ SRCS := main.cpp \
         Characters/NPC/NPCWaterBender.cpp \
         BattleManager/BattleManager.cpp \
         GameLogic/GameData.cpp \
-        GameLogic/DungeonSystem.cpp
+        GameLogic/DungeonSystem.cpp \
+        util/TextDisplay.cpp \
+
 # ===========================================================
 # Object files (mirrors source paths under obj/)
 # ===========================================================
 OBJS := $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRCS))
-# Include paths - IMPORTANT: Added -IGameLogic and -Iutil for JSON
+
 INCLUDES := -I. \
-            -Iutil \
             -ICharacters \
             -ICharacters/BendingSystem \
             -ICharacters/PlayerControlled \
             -ICharacters/NPC \
             -IBattleManager \
-            -IGameLogic
+            -IGameLogic \
+            -Iutil
+
 # ===========================================================
 # Default target
 # ===========================================================
@@ -82,3 +87,4 @@ clean:
 rebuild: clean all
 
 .PHONY: all run clean rebuild
+
