@@ -87,7 +87,7 @@ void GameManager::setupPlayers() {
 }
 
 
-// Region select → DungeonSystem
+// Region select → DungeonSystem // for now. will implement proper world map later
 void GameManager::selectRegionAndRunDungeon() {
     const vector<GameData::RegionData>& regions = gameData->getRegions();
 
