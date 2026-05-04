@@ -103,7 +103,7 @@ void GameManager::selectRegionAndRunDungeon() {
     util::showLoadingSpinner("Entering region...", 1500);
 
     // Hand off to DungeonSystem
-    DungeonSystem dungeon(region.id, gameData, players);
+    DungeonSystem dungeon(&region, gameData, players);
     int result = dungeon.runDungeon();
 
     if (result == 1) {
