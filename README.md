@@ -1,32 +1,55 @@
-# Lab 13a - Let the Battle Begin!
+# Lab 14a - RPGData
 **ECE 205 - Spring 2026**  
-**Authors:** Edward Felipe III <efelipe3@hawaii.edu>, Steven Javier <sdjavier@hawaii.edu>, Menden Cannistra <mendenc@hawaii.edu>
+**Authors:** 
+- Edward Felipe III <efelipe3@hawaii.edu> 
+- Steven Javier <sdjavier@hawaii.edu>
+- Menden Cannistra <mendenc@hawaii.edu>
 ---
 
 ## Overview
-This project focused on implementing containers to track characters within a turn based battle system.
+This project focused on implementing a json parser to handle the story. 
+The team also decided to refactor the code to implement better Object Oriented Design.
 ---
 
 ## Class Hierarchy
 
 ``` 
-GameCharacter
-└── FighterCharacter
-    ├── PlayerCharacter
-        ├── Airbender 
-        ├── Waterbender
-        ├── Earthbender
-        └── Firebender
-    ├── NPCharacter
-        ├── NPCAirbender
-        ├── NPCWaterbender
-        ├── NPCEarthbender
-        ├── NPCFirebender
+GameManager
+├── GameData
+├── DungeonSystem
+├── BattleManager
+└── GameCharacter
+    └── FighterCharacter
+        ├── PlayerCharacter
+            ├── Airbender 
+            ├── Waterbender
+            ├── Earthbender
+            └── Firebender
+        ├── NPCharacter
+            ├── NPCAirbender
+            ├── NPCWaterbender
+            ├── NPCEarthbender
+            ├── NPCFirebender
+    
 ```
 
 ---
 
-## Subclass Descriptions
+## Game Logic Classes
+
+### Game Manager
+The singleton class that tracks the current state of the game.
+
+### Game Data
+The singleton class that parses the json file and handles said data.
+
+### DungeonSystem
+The class that tracks the current position within the dungeon, and handles different room types.
+
+### BattleManager
+The class that tracks the state of a battle within a dungeon, and the final boss.
+
+## Character Class Descriptions
 
 ### GameCharacter
 The base class for all characters in the game. It provides basic functionality such as setting and getting the character's name, and methods for greeting and speaking.
@@ -85,90 +108,4 @@ make
 ### Clean
 ```bash
 make clean
-```
-
----
-
-## Sample Interaction
-
-```
-Enter the number of player characters (Max 4): 3
-
-Enter a name for Player 1: Edward
-Enter a bending style (0=Air, 1=Earth, 2=Fire, 3=Water): 0
---- Edward Stats ---
-Bending: Air
-Health: 100
-Edward the AirBender: Greetings! I am Edward. The wind is at my command, and I will use it to protect my allies
-
-Enter a name for Player 2: Steven
-Enter a bending style (0=Air, 1=Earth, 2=Fire, 3=Water): 3
---- Steven Stats ---
-Bending: Water
-Health: 100
-Steven the WaterBender: Greetings! I am Steven. The water is at my command, and I will use it to protect my allies
-
-Enter a name for Player 3: Menden
-Enter a bending style (0=Air, 1=Earth, 2=Fire, 3=Water): 2
---- Menden Stats ---
-Bending: Fire
-Health: 100
-Menden the FireBender: Greetings! I am Menden. The flames are at my command, and I will use them to protect my allies
-Enter the number of enemy characters (Max 4): 3
-
-========== HEALTH STATUS ==========
-Players:
- - Edward(Health): 100
- - Steven(Health): 100
- - Menden(Health): 100
-
-Enemies:
- - Enemy 1(Health): 100
- - Enemy 2(Health): 100
- - Enemy 3(Health): 100
-===================================
-
->> Edward's turn!
-Choose a target type: 0=Enemy, 1=Ally: 1
-Choose an ally to support:
-0: Edward (Health: 100)
-1: Steven (Health: 100)
-2: Menden (Health: 100)
-2
-
-Game Master: What would you like Edward to do?
-Available Air Bending Actions for Edward:
-0: Air Slice
-1: Air Shield
-2: Flight
-Enter the number corresponding to your choice (0=Slice, 1=Shield, 2=Flight): 1
-
---- Action Selected: Air Shield ---
-
-Edward creates an Air Shield! A swirling barrier of wind protects them from incoming attacks.
-
-Air Shield activates!ProtectsMenden
-Shield logic not fully implemented yet, but it will block the next incoming attack.
-
->> Steven's turn!
-Choose a target type: 0=Enemy, 1=Ally: 0
-Choose an enemy to attack:
-0: Enemy 1 (Health: 100)
-1: Enemy 2 (Health: 100)
-2: Enemy 3 (Health: 100)
-0
-
-Game Master: What would you like Steven to do?
-Available Water Bending Actions for Steven:
-0: Healing Waters
-1: Water Whip
-2: Ice Barrier
-Enter the number corresponding to your choice (0=Healing, 1=Whip, 2=Barrier): 1
-
---- Action Selected: Water Whip ---
-
-Steven uses Water Whip on Enemy 1!
-
-Water Whip hits!
-Water Whip deals 9 damage to Enemy 1
 ```
