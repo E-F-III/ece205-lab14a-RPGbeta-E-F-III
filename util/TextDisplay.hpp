@@ -41,6 +41,8 @@ namespace util {
     void clearScreen();
     void showLoadingSpinner(const std::string& text, int durationMs = 1000);
     void printProgressBar(int current, int total, char barChar = '#', const char* fgCode = FG_GREEN);
+    int promptInt(const std::string& prompt, int lo, int hi);
+    void waitEnter();
 }
 
 #endif // UTIL_TEXT_DISPLAY_HPP

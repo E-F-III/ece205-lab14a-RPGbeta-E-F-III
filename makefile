@@ -32,6 +32,7 @@ SRCS := main.cpp \
         BattleManager/BattleManager.cpp \
         GameLogic/GameData.cpp \
         GameLogic/DungeonSystem.cpp \
+        GameLogic/GameManager.cpp \
         util/TextDisplay.cpp \
 
 # ===========================================================

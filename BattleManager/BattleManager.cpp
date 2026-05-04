@@ -48,6 +48,7 @@ void BattleManager::runBattle() {
         // 1. Players Turn
         for (auto p : players) {
             if (isPartyAlive(enemies)) performTurn(p, players, enemies, false);
+            util::waitEnter();
             BattleManager::displayHealth(); // Update health after each player's turn
         }
         // 2. Enemies Turn
@@ -55,6 +56,8 @@ void BattleManager::runBattle() {
             util::showLoadingSpinner("Enemy performing action...", 2000); // Brief pause for dramatic effect
             if (isPartyAlive(players)) performTurn(e, enemies, players, true);
             //  BattleManager::displayHealth(); // Update health after each enemy's turn
+            util::waitEnter();
+            BattleManager::displayHealth(); // Update health after each player's turn
         }
     }
     if (isPartyAlive(players)) {
