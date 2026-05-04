@@ -44,6 +44,17 @@ void GameManager::run() {
     util::printColor("=========================================\n", util::FG_MAGENTA);
     cout << "\n";
 
+    // ── Demo Mode prompt ──────────────────────────────────────────────────────
+    cout << "\n";
+    util::printColor("Enable DEMO MODE? (players deal 3x damage) [y/n]: ", util::FG_YELLOW);
+    char demoChoice;
+    cin >> demoChoice;
+    cin.ignore(1000, '\n');
+    demoMode = (demoChoice == 'y' || demoChoice == 'Y');
+    if (demoMode)
+        util::printColor("[DEMO MODE ACTIVATED] Battles will be quick!\n", util::FG_YELLOW);
+    // ─────────────────────────────────────────────────────────────────────────
+    
     setupPlayers();
 
     // Restore all players to starting health

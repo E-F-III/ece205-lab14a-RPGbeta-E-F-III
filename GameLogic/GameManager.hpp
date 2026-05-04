@@ -34,6 +34,7 @@ private:
     std::vector<FighterCharacter*> players;
     std::set<std::string>          resolvedRegions; // regions the party has cleared
     int                            gold;
+    bool                           demoMode = false; // If true, players deal 3x damage for quick battles
 
     // ── Overworld scene handlers 
     // Each returns the key of the next scene.

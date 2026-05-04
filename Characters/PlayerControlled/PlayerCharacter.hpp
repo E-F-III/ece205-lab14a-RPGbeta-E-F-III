@@ -16,7 +16,9 @@
 class PlayerCharacter : public FighterCharacter {
     public:
         // Pass parameters up to the FighterCharacter constructor
-        PlayerCharacter(std::string& characterName, int& bendingStyleCode);
+        PlayerCharacter(std::string& characterName, int& bendingStyleCode, bool demoMode);
+
+        bool demoMode; // Flag to indicate if the player is in demo mode (for testing purposes)
 
         virtual ~PlayerCharacter() = default;
 

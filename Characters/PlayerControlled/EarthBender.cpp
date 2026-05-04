@@ -11,7 +11,7 @@
 #include "util/TextDisplay.hpp"
 using namespace std;
 /// Constructor: initializes the earth bending system
-EarthBender::EarthBender(std::string& characterName, int& raceCode) : PlayerCharacter(characterName, raceCode) {
+EarthBender::EarthBender(std::string& characterName, int& raceCode, bool demoMode) : PlayerCharacter(characterName, raceCode, demoMode) {
     // Initialize earth bending system
     earthBendingSystem = new EarthBending();
 }

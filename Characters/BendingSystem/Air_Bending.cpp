@@ -21,6 +21,12 @@ void AirBending::airSlice(FighterCharacter& character, FighterCharacter& target)
     
     int targetHealth = target.getHealth();
     int damage = FighterCharacter::rollDice(5, 10);
+
+    //demo
+    if (character.demoMode) {
+        damage *= 3; // Fixed damage for demo mode
+    }
+
     target.setHealth(targetHealth - damage);
     cout << "Air Slice deals " << damage << " damage to " << target.getName() << endl;
 }

@@ -12,7 +12,7 @@ class AirBender : public PlayerCharacter {
         
     public:
         /// Constructor:
-        explicit AirBender(std::string& characterName, int& raceCode);
+        explicit AirBender(std::string& characterName, int& raceCode, bool demoMode);
         // Destructor: Essential cleanup when using raw pointers
         ~AirBender();
         

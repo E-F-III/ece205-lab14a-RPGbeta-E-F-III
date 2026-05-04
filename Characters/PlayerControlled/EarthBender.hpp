@@ -22,12 +22,12 @@ class EarthBender : public PlayerCharacter {
         
     public:
         /// Constructor:
-        explicit EarthBender(std::string& characterName, int& raceCode);
+        explicit EarthBender(std::string& characterName, int& raceCode, bool demoMode);
         // Destructor: Essential cleanup when using raw pointers
         ~EarthBender();
         
         /// use bending system to perform an earth bending action (REMOVED 'override' KEYWORD)
-        virtual void performAction(FighterCharacter& target);
+        virtual void performAction(FighterCharacter& target) override;
         
         /// Print EarthBender-specific stats in addition to base stats
         void printStats();

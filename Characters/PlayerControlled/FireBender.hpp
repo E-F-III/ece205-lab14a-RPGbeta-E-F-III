@@ -22,7 +22,7 @@ class FireBender : public PlayerCharacter {
         
     public:
         /// Constructor:
-        explicit FireBender(std::string& characterName, int& raceCode);
+        explicit FireBender(std::string& characterName, int& raceCode, bool demoMode);
         // Destructor: Essential cleanup when using raw pointers
         ~FireBender();
         

@@ -17,10 +17,17 @@ using namespace std;
 /// takes in address of name from user and int corresponding to race
 /// inherited from GameCharacter, note only the setName() member is used,
 // (since no race member)
-PlayerCharacter::PlayerCharacter(std::string& characterName, int& bendingStyleCode)
+PlayerCharacter::PlayerCharacter(std::string& characterName, int& bendingStyleCode, bool demoMode)
     : FighterCharacter(characterName, bendingStyleCode) 
 {
-    // No extra logic for now, but you could add player-specific initialization here if needed
+    // If demoMode is true, boost player stats for quicker battles
+    if (demoMode) {
+        setHealth(getHealth() * 3);
+        setStrength(getStrength() * 3);
+        setAgility(getAgility() * 3);
+        setDefense(getDefense() * 3);
+    }
+    this->demoMode = demoMode;
 }
 
 ///greeting using the name of PlayerCharacter

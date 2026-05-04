@@ -12,7 +12,7 @@
 using namespace std;
 // --- Constructor and Destructor ---
 /// Constructor: initializes the air bending system
-AirBender::AirBender(std::string& characterName, int& raceCode) : PlayerCharacter(characterName, raceCode) {
+AirBender::AirBender(std::string& characterName, int& raceCode, bool demoMode) : PlayerCharacter(characterName, raceCode, demoMode) {
     airBendingSystem = new AirBending();
     // Initialize the air bending system pointer
 }

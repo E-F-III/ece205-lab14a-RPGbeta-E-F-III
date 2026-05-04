@@ -12,7 +12,7 @@
 #include "util/TextDisplay.hpp"
 using namespace std;
 /// Constructor: initializes the water bending system
-WaterBender::WaterBender(std::string& characterName, int& raceCode) : PlayerCharacter(characterName, raceCode) {
+WaterBender::WaterBender(std::string& characterName, int& raceCode, bool demoMode) : PlayerCharacter(characterName, raceCode, demoMode) {
     // Initialize water bending system
     waterBendingSystem = new WaterBending();
 }

@@ -21,7 +21,7 @@ class WaterBender : public PlayerCharacter {
         
     public:
         /// Constructor:
-        explicit WaterBender(std::string& characterName, int& raceCode);
+        explicit WaterBender(std::string& characterName, int& raceCode, bool demoMode);
         // Destructor: Essential cleanup when using raw pointers
         ~WaterBender();
         

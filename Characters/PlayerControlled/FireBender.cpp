@@ -12,7 +12,7 @@
 #include "util/TextDisplay.hpp"
 using namespace std;
 /// Constructor: initializes the fire bending system
-FireBender::FireBender(std::string& characterName, int& raceCode) : PlayerCharacter(characterName, raceCode) {
+FireBender::FireBender(std::string& characterName, int& raceCode, bool demoMode) : PlayerCharacter(characterName, raceCode, demoMode) {
     // Initialize fire bending system
     fireBendingSystem = new FireBending();
 }
