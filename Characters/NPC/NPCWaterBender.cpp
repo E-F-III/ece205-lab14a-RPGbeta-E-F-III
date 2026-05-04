@@ -33,14 +33,22 @@ void NPCWaterBender::performAction(FighterCharacter& target) {
             cout << "\n--- Action Selected: Healing Waters ---\n" << endl;
             waterBendingSystem->healingWaters(*this, target);
             break;
-        case 1:
+        case 1: 
             cout << "\n--- Action Selected: Water Whip ---\n" << endl;
             waterBendingSystem->waterWhip(*this, target);
             break;
         case 2:
-            cout << "\n--- Action Selected: Ice Barrier ---\n" << endl;
-            waterBendingSystem->iceBarrier(*this, target);
+            cout << "\n--- Action Selected: Water Vortex ---\n" << endl;
+            waterBendingSystem->waterVortex(*this, target);
             break;
+        // case 1:
+        //     cout << "\n--- Action Selected: Water Whip ---\n" << endl;
+        //     waterBendingSystem->waterWhip(*this, target);
+        //     break;
+        // case 2:
+        //     cout << "\n--- Action Selected: Ice Barrier ---\n" << endl;
+        //     waterBendingSystem->iceBarrier(*this, target);
+        //     break;
     }
 }
 /// Print WaterBender-specific stats in addition to base stats

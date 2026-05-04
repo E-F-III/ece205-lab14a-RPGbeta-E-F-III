@@ -45,13 +45,21 @@ void EarthBender::performAction(FighterCharacter& target) {
             earthBendingSystem->earthSpike(*this, target);
             break;
         case 1:
-            util::printColor("\n--- Action Selected: Rock Shield ---\n", util::FG_WHITE);
-            earthBendingSystem->rockShield(*this, target);
+            util::printColor("\n--- Action Selected: Rock Throw ---\n", util::FG_MAGENTA);
+            earthBendingSystem->rockThrow(*this, target);
             break;
         case 2:
             util::printColor("\n--- Action Selected: Seismic Slam ---\n", util::FG_MAGENTA);
             earthBendingSystem->seismicSlam(*this, target);
             break;
+        // case 1:
+        //     util::printColor("\n--- Action Selected: Rock Shield ---\n", util::FG_WHITE);
+        //     earthBendingSystem->rockShield(*this, target);
+        //     break;
+        // case 2:
+        //     util::printColor("\n--- Action Selected: Seismic Slam ---\n", util::FG_MAGENTA);
+        //     earthBendingSystem->seismicSlam(*this, target);
+        //     break;
     }
 }
 /// Print EarthBender-specific stats in addition to base stats

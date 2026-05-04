@@ -50,9 +50,13 @@ void WaterBender::performAction(FighterCharacter& target) {
             waterBendingSystem->waterWhip(*this, target);
             break;
         case 2:
-            util::printColor("\n--- Action Selected: Ice Barrier ---\n", util::FG_CYAN);
-            waterBendingSystem->iceBarrier(*this, target);
+            util::printColor("\n--- Action Selected: Water Vortex ---\n", util::FG_CYAN);
+            waterBendingSystem->waterVortex(*this, target);
             break;
+        // case 2:
+        //     util::printColor("\n--- Action Selected: Ice Barrier ---\n", util::FG_CYAN);
+        //     waterBendingSystem->iceBarrier(*this, target);
+        //     break;
     }
 }
 /// Print WaterBender-specific stats in addition to base stats

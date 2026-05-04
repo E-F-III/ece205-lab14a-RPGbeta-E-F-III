@@ -41,13 +41,21 @@ void AirBender::performAction(FighterCharacter& target) {
             airBendingSystem->airSlice(*this,target);
             break;
         case 1:
-            util::printColor("\n--- Action Selected: Air Shield ---\n", util::FG_YELLOW);
-            airBendingSystem->airShield(*this, target); 
+            util::printColor("\n--- Action Selected: Air Blast ---\n", util::FG_YELLOW);
+            airBendingSystem->airBlast(*this, target);
             break;
         case 2:
-            util::printColor("\n--- Action Selected: Flight ---\n", util::FG_YELLOW);
-            airBendingSystem->flight(*this);
+            util::printColor("\n--- Action Selected: Tornado ---\n", util::FG_YELLOW);
+            airBendingSystem->tornado(*this, target);
             break;
+        // case 1:
+        //     util::printColor("\n--- Action Selected: Air Shield ---\n", util::FG_YELLOW);
+        //     airBendingSystem->airShield(*this, target); 
+        //     break;
+        // case 2:
+        //     util::printColor("\n--- Action Selected: Flight ---\n", util::FG_YELLOW);
+        //     airBendingSystem->flight(*this);
+        //     break;
     }
 }
 /// Print AirBender-specific stats in addition to base stats

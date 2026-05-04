@@ -34,13 +34,21 @@ void NPCEarthBender::performAction(FighterCharacter& target) {
             earthBendingSystem->earthSpike(*this, target);
             break;
         case 1:
-            cout << "\n--- Action Selected: Rock Shield ---\n" << endl;
-            earthBendingSystem->rockShield(*this, target);
+            cout << "\n--- Action Selected: Rock Throw ---\n" << endl;
+            earthBendingSystem->rockThrow(*this, target);
             break;
         case 2:
             cout << "\n--- Action Selected: Seismic Slam ---\n" << endl;
             earthBendingSystem->seismicSlam(*this, target);
             break;
+        // case 1:
+        //     cout << "\n--- Action Selected: Rock Shield ---\n" << endl;
+        //     earthBendingSystem->rockShield(*this, target);
+        //     break;
+        // case 2:
+        //     cout << "\n--- Action Selected: Seismic Slam ---\n" << endl;
+        //     earthBendingSystem->seismicSlam(*this, target);
+        //     break;
     }
 }
 /// Print EarthBender-specific stats in addition to base stats
