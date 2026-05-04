@@ -99,6 +99,7 @@ An NPC version of the Firebender. They execute fire bending attacks and defenses
 ```bash
 make
 ```
+* There is a warning when running make. The function warning is due to future implementation *
 
 ### Run
 ```bash

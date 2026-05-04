@@ -146,6 +146,8 @@ string GameManager::handleDialogue(const json& scene) {
 string GameManager::handleRegionSelect(const json& scene) {
     const vector<GameData::RegionData>& regions = gameData->getRegions();
 
+    string text = scene.value("text", "");
+
     util::printColor("\n=== CHOOSE A REGION ===\n", util::FG_YELLOW);
     util::printColor("Cleared: " + to_string(resolvedRegions.size()) + " / "
                      + to_string(regions.size()) + "\n", util::FG_WHITE);
