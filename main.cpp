@@ -1,16 +1,9 @@
-///////////////////////////////////////////////////////////////////////////////
-//  University of Hawaii, College of Engineering
-//  Lab 11a - Game Character Class Part II - ECE 205 - Spring 2025
-//
-/// @file    main.cpp
-/// @author  Menden Cannistra <mendenc@hawaii.edu>
-///////////////////////////////////////////////////////////////////////////////
-
 #include <iostream>
 #include <fstream> // needed for file I/O to read the story data
 #include <vector>
-#include <string>
 #include <ctime>
+#include "GameLogic/GameData.hpp"
+#include "GameLogic/DungeonSystem.hpp"
 
 // Include the third party json parser
 #include "json.hpp"
@@ -30,6 +23,11 @@
 
 // Include the Utility header for pretty text
 #include "util/TextDisplay.hpp"
+#include "Characters/PlayerControlled/AirBender.hpp"
+#include "Characters/PlayerControlled/EarthBender.hpp"
+#include "Characters/PlayerControlled/FireBender.hpp"
+#include "Characters/PlayerControlled/WaterBender.hpp"
+
 
 using namespace std;
 
@@ -52,19 +50,18 @@ void loadStoryData() {
 PlayerCharacter* createPlayer(int i) {
     string name;
     int code;
-    
     util::printColor("\n[ Player Creation " + to_string(i + 1) + " ]\n", util::FG_CYAN);
     cout << "Enter name: ";
-    cin.ignore(1000, '\n'); 
+    if(i == 0) cin.ignore(1000, '\n'); 
     getline(cin, name);
-
+    
     cout << "Bending (0:Air, 1:Earth, 2:Fire, 3:Water): ";
     while (!(cin >> code) || code < 0 || code > 3) {
         cout << "Invalid. Enter 0-3: ";
         cin.clear();
         cin.ignore(1000, '\n');
     }
-
+    
     PlayerCharacter* newPlayer = nullptr;
     switch (code) {
         case 0: newPlayer = new AirBender(name, code); break;
@@ -72,29 +69,11 @@ PlayerCharacter* createPlayer(int i) {
         case 2: newPlayer = new FireBender(name, code); break;
         case 3: newPlayer = new WaterBender(name, code); break;
     }
-
-    if (newPlayer) {
-        newPlayer->greet(); // Triggers the typing animation intro
-    }
+    
+    if (newPlayer) newPlayer->greet();
     return newPlayer;
 }
 
-NPCharacter* createNPC(int i) {
-    int code = rand() % 4;
-    string name = "Enemy " + to_string(i + 1);
-    NPCharacter* newEnemy = nullptr;
-
-    switch (code) {
-        case 0: newEnemy = new NPCAirBender(name, code); break;
-        case 1: newEnemy = new NPCEarthBender(name, code); break;
-        case 2: newEnemy = new NPCFireBender(name, code); break;
-        case 3: newEnemy = new NPCWaterBender(name, code); break;
-    }
-
-    return newEnemy;
-}
-
-// --- Main Execution ---
 
 int main() {
     loadStoryData(); // Load the story data from the JSON file at the start of the program
@@ -104,41 +83,51 @@ int main() {
     util::clearScreen();
     srand(static_cast<unsigned int>(time(NULL)));
 
+
+    string jsonFileName = "util/story_config.json";
+    GameData gameStorage(jsonFileName);
+
+
     util::printColor("=========================================\n", util::FG_MAGENTA);
     util::printColor("           AVATAR: TERMINAL ELEMENTS     \n", util::BOLD);
     util::printColor("=========================================\n", util::FG_MAGENTA);
 
-    int numPlayers, numEnemies;
-    vector<FighterCharacter*> players;
-    vector<FighterCharacter*> enemies;
 
-    // 1. Setup Players
-    cout << "How many players? (1-4): ";
+    vector<FighterCharacter*> party;
+    cout << "\nHow many players? (1-4): ";
+    int numPlayers = 0;
     while (!(cin >> numPlayers) || numPlayers < 1 || numPlayers > 4) {
-        cin.clear(); cin.ignore(1000, '\n');
+        cin.clear(); 
+        cin.ignore(1000, '\n');
         cout << "Invalid. Try 1-4: ";
     }
+
+
     for (int i = 0; i < numPlayers; i++) {
-        players.push_back(createPlayer(i));
+        party.push_back(createPlayer(i));
     }
 
-    // 2. Setup Enemies
-    cout << "\nHow many enemies? (1-4): ";
-    while (!(cin >> numEnemies) || numEnemies < 1 || numEnemies > 4) {
-        cin.clear(); cin.ignore(1000, '\n');
-        cout << "Invalid. Try 1-4: ";
-    }
-    for (int i = 0; i < numEnemies; i++) {
-        enemies.push_back(createNPC(i));
-    }
 
-    // 3. Hand over control to the BattleManager
-    BattleManager battle(players, enemies);
+    // Starting in fire_nation for testing
+    string activeRegion = "fire_nation"; 
+    DungeonSystem dungeon(activeRegion, &gameStorage, party);
     
-    util::printColor("\n--- THE BATTLE BEGINS ---\n", util::FG_YELLOW);
-    util::showLoadingSpinner("Loading Arena... ", 1500); // Visual flair before starting
-    
-    battle.runBattle();
+    util::printColor("\n--- STARTING DUNGEON TRAVERSAL ---\n", util::FG_YELLOW);
+    int result = dungeon.runDungeon();
 
-    return 0; 
+
+    // Check health properly to avoid the precedence warning
+    if (result == 1 && party[0]->getHealth() > 0) {
+        util::printColor("\n\n★★★ SUCCESS! Dungeon Cleared! ★★★\n", util::FG_GREEN);
+    } 
+    else if (party[0]->getHealth() <= 0) {
+        util::printColor("\n\n DEFEAT... You succumbed to the forces of the dungeon.\n", util::FG_RED);
+    } 
+    else {
+        util::printColor("\n\n[TEST WARNING] Dungeon run ended. Result: " + to_string(result) + "\n", util::FG_YELLOW);
+    }
+
+
+    for (auto p : party) delete p;
+    return 0;
 }

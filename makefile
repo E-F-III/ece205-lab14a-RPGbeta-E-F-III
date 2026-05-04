@@ -1,5 +1,5 @@
 # ===========================================================
-# Makefile for ECE205 Lab 13a - Game Battle
+# Makefile for ECE 205 Lab 14a - RPG Beta (Dungeon Expansion)
 # ===========================================================
 
 CXX      := g++
@@ -24,12 +24,14 @@ SRCS := main.cpp \
         Characters/PlayerControlled/FireBender.cpp \
         Characters/PlayerControlled/PlayerCharacter.cpp \
         Characters/PlayerControlled/WaterBender.cpp \
+        Characters/NPC/NPCharacter.cpp \
         Characters/NPC/NPCAirBender.cpp \
         Characters/NPC/NPCEarthBender.cpp \
         Characters/NPC/NPCFireBender.cpp \
-        Characters/NPC/NPCharacter.cpp \
         Characters/NPC/NPCWaterBender.cpp \
         BattleManager/BattleManager.cpp \
+        GameLogic/GameData.cpp \
+        GameLogic/DungeonSystem.cpp \
         util/TextDisplay.cpp \
 
 # ===========================================================
@@ -37,13 +39,13 @@ SRCS := main.cpp \
 # ===========================================================
 OBJS := $(patsubst %.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 
-# Include paths
 INCLUDES := -I. \
             -ICharacters \
             -ICharacters/BendingSystem \
             -ICharacters/PlayerControlled \
             -ICharacters/NPC \
             -IBattleManager \
+            -IGameLogic \
             -Iutil
 
 # ===========================================================
@@ -85,3 +87,4 @@ clean:
 rebuild: clean all
 
 .PHONY: all run clean rebuild
+
