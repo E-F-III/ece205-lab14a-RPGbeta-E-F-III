@@ -31,6 +31,7 @@ public:
 
     // Static helper to find region by ID
     static const RegionData* findRegion(const std::string& regionId, const std::vector<RegionData>& regionsList);
+    const std::vector<RegionData>& getRegions();
 
 private:
     struct ConfigData {

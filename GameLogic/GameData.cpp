@@ -8,20 +8,36 @@ using namespace std;
 using namespace nlohmann;
 
 GameData::GameData(const string& jsonFilename) {
-    // Basic initialization
-    (void)jsonFilename; 
-    
-    // Hardcoded fallback regions so the game works even without the JSON file
-    RegionData fire; fire.id = "fire_nation"; fire.name = "Fire Nation Outpost";
-    regionsList.push_back(fire);
-    RegionData water; water.id = "water_tribe"; water.name = "Northern Water Tribe";
-    regionsList.push_back(water);
-    RegionData earth; earth.id = "earth_kingdom"; earth.name = "Ba Sing Se Walls";
-    regionsList.push_back(earth);
-    RegionData air; air.id = "air_temple"; air.name = "Southern Air Temple";
-    regionsList.push_back(air);
-    
-    config.starting_scene = "intro";
+    ifstream file(jsonFilename);
+    if (!file.is_open()) {
+        cerr << "ERROR: Could not open " << jsonFilename << "\n";
+        exit(1);
+    }
+
+    json j;
+    file >> j;
+    file.close();
+
+    // Load config
+    config.starting_scene = j["config"]["starting_scene"];
+    config.starting_gold = j["config"]["starting_gold"];
+    config.home_region_locked_first = j["config"]["home_region_locked_first"];
+
+    // Load regions
+    for (const auto& region : j["regions"]) {
+        RegionData rd;
+        rd.id = region["id"];
+        rd.name = region["name"];
+        rd.hub_scene = region["hub_scene"];
+        rd.win_scene = region["win_scene"];
+        rd.minion_hp = region["minion_hp"];
+        rd.boss_hp = region["boss_hp"];
+
+        for (const auto& location : region["locations"].items()) {
+            rd.locations[location.key()] = location.value();
+        }
+        regionsList.push_back(rd);
+    }
 }
 
 GameData::~GameData() = default;
@@ -35,6 +51,10 @@ const GameData::RegionData* GameData::findRegion(const string& regionId, const s
         if (reg.id == regionId) return &reg;
     }
     return nullptr;
+}
+
+const std::vector<GameData::RegionData>& GameData::getRegions() {
+    return regionsList;
 }
 
 FighterCharacter* GameData::createMinionFromJSON(const string& regionId) {
