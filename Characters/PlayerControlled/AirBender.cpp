@@ -28,7 +28,7 @@ void AirBender::performAction(FighterCharacter& target) {
     airBendingSystem->getAvailableBendingActions(*this); // Display available options
     // Loop ensured the options 0-2 are selected (Input Validation)
     while (choice < 0 || choice > 2) {
-        cout << "Enter the number corresponding to your choice (0=Slice, 1=Shield, 2=Flight): ";
+        cout << "Enter the number corresponding to your choice: ";
         cin >> choice;
         if (choice < 0 || choice > 2) {
             cout << "Invalid input! Please enter a number between 0 and 2." << endl;

@@ -31,7 +31,7 @@ void FireBender::performAction(FighterCharacter& target) {
     
     // Loop ensures the options 0-2 are selected (Validation)
     while (choice < 0 || choice > 2) {
-        cout << "Enter the number corresponding to your choice (0=Blast, 1=Breath, 2=Lightning): ";
+        cout << "Enter the number corresponding to your choice: ";
         cin >> choice;
         if (choice < 0 || choice > 2) {
             util::printColor("Invalid input! Please enter a number between 0 and 2.\n", util::FG_RED);
