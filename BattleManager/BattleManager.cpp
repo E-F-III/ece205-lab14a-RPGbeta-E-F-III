@@ -67,6 +67,9 @@ void BattleManager::runBattle() {
     } else {
         util::printColor("\n ☠  DEFEAT...  ☠ \n", util::FG_RED);
     }
+
+    util::waitEnter();
+    util::clearScreen();
 }   
 
 void BattleManager::performTurn(FighterCharacter* attacker,

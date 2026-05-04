@@ -65,7 +65,10 @@ void GameManager::run() {
     string currentKey = gameData->getStartingScene();
 
     while (!currentKey.empty()) {
+        util::clearScreen(); // clear screen in between scenes
+
         const json& scene = gameData->getScene(currentKey);
+
 
         if (scene.is_null()) {
             cerr << "WARNING: scene key \"" << currentKey << "\" not found\n";

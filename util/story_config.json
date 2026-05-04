@@ -130,8 +130,7 @@
       "type": "prompt",
       "text": "A gate opens to the spirit realm. Will you enter and face the corrupted bender?",
       "options": [
-        { "label": "Enter the spirit realm", "next": "scene_final_battle" },
-        { "label": "Prepare more first", "next": "scene_region_select" }
+        { "label": "Enter the spirit realm", "next": "scene_final_battle" }
       ]
     },
     "scene_final_battle": {
@@ -638,7 +637,7 @@
         "hp": 180,
         "attack": 30,
         "defense": 15,
-        "element": null
+        "element": "fire"
       }
     } 
   }
