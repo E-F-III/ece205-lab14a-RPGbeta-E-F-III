@@ -21,7 +21,7 @@ using namespace std;
 /// inherited from GameCharacter, note only the setName() member is used,
 // (since no race member)
 NPCharacter::NPCharacter(string& characterName, int& bendingStyleCode) 
-    : FighterCharacter(characterName, bendingStyleCode) 
+    : FighterCharacter(characterName, bendingStyleCode, false) 
 {
     // No extra logic for now, but you could add NPC-specific initialization here if needed
 }

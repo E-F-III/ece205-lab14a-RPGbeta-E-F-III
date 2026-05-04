@@ -18,13 +18,18 @@ int FighterCharacter::rollDice(int lower, int upper) {
     uniform_int_distribution<int> distribution(lower, upper);
     return distribution(engine);
 }
-FighterCharacter::FighterCharacter(std::string& name, int& styleCode, bool demoMode) : GameCharacter(name) {
+
+
+FighterCharacter::FighterCharacter(std::string& name, int& styleCode, bool demoMode = false) : GameCharacter(name) {
     this->health = 100;
     this->strength = rollDice(0, 10);
     this->agility = rollDice(0, 10);
     this->defense = rollDice(0, 10);
     setBendingStyle(styleCode); // Set the style only for fighters.
+    
+    this->demoMode = demoMode; // Set demo mode based on constructor parameter
 }
+
 FighterCharacter::~FighterCharacter() {
     // Virtual destructor implementation
 }
@@ -55,6 +60,7 @@ BendingStyle FighterCharacter::getBendingStyle() {
 bool FighterCharacter::isDemoMode() const {
     return demoMode;
 }
+
 // Setters
 void FighterCharacter::setHealth(int health) {
     this->health = health;

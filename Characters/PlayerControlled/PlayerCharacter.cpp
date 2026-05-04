@@ -18,7 +18,7 @@ using namespace std;
 /// inherited from GameCharacter, note only the setName() member is used,
 // (since no race member)
 PlayerCharacter::PlayerCharacter(std::string& characterName, int& bendingStyleCode, bool demoMode)
-    : FighterCharacter(characterName, bendingStyleCode) 
+    : FighterCharacter(characterName, bendingStyleCode, demoMode) 
 {
     // If demoMode is true, boost player stats for quicker battles
     if (demoMode) {

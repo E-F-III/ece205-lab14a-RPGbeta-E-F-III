@@ -139,6 +139,7 @@ string GameManager::handleDialogue(const json& scene) {
 
 
 // handleRegionSelect — show available regions, run DungeonSystem for chosen one
+// at the moment, scene is passed for future implementation of region-specific dialogue or conditions, but currently unused
 string GameManager::handleRegionSelect(const json& scene) {
     const vector<GameData::RegionData>& regions = gameData->getRegions();
 
@@ -270,10 +271,10 @@ void GameManager::setupPlayers() {
 
         PlayerCharacter* p = nullptr;
         switch (code) {
-            case 0: p = new AirBender  (name, code); break;
-            case 1: p = new EarthBender(name, code); break;
-            case 2: p = new FireBender (name, code); break;
-            case 3: p = new WaterBender(name, code); break;
+            case 0: p = new AirBender  (name, code, demoMode); break;
+            case 1: p = new EarthBender(name, code, demoMode); break;
+            case 2: p = new FireBender (name, code, demoMode); break;
+            case 3: p = new WaterBender(name, code, demoMode); break;
         }
         if (p) {
             p->greet();
