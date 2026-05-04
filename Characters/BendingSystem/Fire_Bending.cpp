@@ -20,6 +20,11 @@ void FireBending::fireBlast(FighterCharacter& character, FighterCharacter& targe
     cout << "\nFire Blast hits!" << endl;
     // Calculate damage: Medium range for fire blast
     int damage = FighterCharacter::rollDice(7, 12); 
+
+    // demo
+    if (character.isDemoMode()) {
+        damage *= 3; // Fixed damage for demo mode
+    }
     
     // Update health via getter/setter to ensure specific instance update
     target.setHealth(target.getHealth() - damage); 
@@ -34,6 +39,11 @@ void FireBending::fireBreath(FighterCharacter& character, FighterCharacter& targ
     
     // Calculate area damage: Cone of fire deals moderate damage
     int damage = FighterCharacter::rollDice(6, 11); 
+
+    // demo
+    if (character.isDemoMode()) {
+        damage *= 3; // Fixed damage for demo mode
+    }
     
     target.setHealth(target.getHealth() - damage);
     util::printColor("Fire Breath deals " + std::to_string(damage) + " damage to " + target.getName() + "\n", util::FG_RED); 
@@ -47,6 +57,11 @@ void FireBending::lightningStrike(FighterCharacter& character, FighterCharacter&
     // Calculate damage: High range for lightning attack
     int damage = FighterCharacter::rollDice(12, 20); 
     
+    // demo
+    if (character.isDemoMode()) {
+        damage *= 3; // Fixed damage for demo mode
+    }
+
     // Update health via getter/setter to ensure specific instance update
     target.setHealth(target.getHealth() - damage); 
     

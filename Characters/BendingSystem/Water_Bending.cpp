@@ -21,6 +21,12 @@ void WaterBending::healingWaters(FighterCharacter& character, FighterCharacter& 
     // Calculate healing: Diceroll between 5 and 10 for healing amount
     int healAmount = FighterCharacter::rollDice(5, 10); 
     
+    // demo
+    if (character.isDemoMode()) {
+        healAmount *= 3; // Fixed healing for demo mode
+    }
+    
+
     // Update health via getter/setter to ensure specific instance update (don't exceed max health if desired, but simple game allows overflow)
     target.setHealth(target.getHealth() + healAmount); 
     
@@ -36,13 +42,18 @@ void WaterBending::waterWhip(FighterCharacter& character, FighterCharacter& targ
     // Calculate damage: Medium range for whip attack
     int damage = FighterCharacter::rollDice(7, 12); 
     
+    // demo
+    if (character.isDemoMode()) {
+        damage *= 3; // Fixed damage for demo mode
+    }
+
     // Update health via getter/setter to ensure specific instance update
     target.setHealth(targetHealth - damage); 
     
     util::printColor("Water Whip deals " + std::to_string(damage) + " damage to " + target.getName() + "\n", util::FG_CYAN); 
 }
 
-void waterVortex(FighterCharacter& character, FighterCharacter& target) {
+void WaterBending::waterVortex(FighterCharacter& character, FighterCharacter& target) {
     int targetHealth = target.getHealth();
     
     util::printColor(character.getName() + " summons a Water Vortex around " + target.getName() + "!\n", util::FG_CYAN);
@@ -50,6 +61,11 @@ void waterVortex(FighterCharacter& character, FighterCharacter& target) {
     // Calculate damage: Higher range for vortex attack
     int damage = FighterCharacter::rollDice(10, 18); 
     
+    // demo
+    if (character.isDemoMode()) {
+        damage *= 3; // Fixed damage for demo mode
+    }
+
     // Update health via getter/setter to ensure specific instance update
     target.setHealth(targetHealth - damage); 
     

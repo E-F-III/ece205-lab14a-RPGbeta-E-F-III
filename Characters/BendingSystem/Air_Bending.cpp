@@ -23,7 +23,7 @@ void AirBending::airSlice(FighterCharacter& character, FighterCharacter& target)
     int damage = FighterCharacter::rollDice(5, 10);
 
     //demo
-    if (character.demoMode) {
+    if (character.isDemoMode()) {
         damage *= 3; // Fixed damage for demo mode
     }
 
@@ -39,6 +39,12 @@ void AirBending::airBlast(FighterCharacter& character, FighterCharacter& target)
     
     int targetHealth = target.getHealth();
     int damage = FighterCharacter::rollDice(10, 20);
+
+    // demo
+    if (character.isDemoMode()) {
+        damage *= 3; // Fixed damage for demo mode
+    }
+
     target.setHealth(targetHealth - damage);
     cout << "Air Blast deals " << damage << " damage to " << target.getName() << endl;
 }
@@ -51,6 +57,12 @@ void AirBending::tornado(FighterCharacter& character, FighterCharacter& target) 
     
     int targetHealth = target.getHealth();
     int damage = FighterCharacter::rollDice(15, 30);
+
+    // demo
+    if (character.isDemoMode()) {
+        damage *= 3; // Fixed damage for demo mode
+    }
+
     target.setHealth(targetHealth - damage);
     cout << "Tornado deals " << damage << " damage to " << target.getName() << endl;
 }

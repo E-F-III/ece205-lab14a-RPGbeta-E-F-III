@@ -21,10 +21,11 @@ class FighterCharacter : public GameCharacter {
         int strength;
         int agility;
         int defense;
+        bool demoMode; // Flag to indicate if the character is in demo mode (for testing purposes)
         BendingStyle bendingStyle;
 
     public:
-        FighterCharacter(std::string& characterName, int& bendingStyleCode);
+        FighterCharacter(std::string& characterName, int& bendingStyleCode, bool demoMode);
 
         virtual ~FighterCharacter(); // Virtual destructor for proper cleanup of derived classes
 
@@ -33,6 +34,7 @@ class FighterCharacter : public GameCharacter {
         int getStrength();
         int getAgility();
         int getDefense();
+        bool isDemoMode() const;
         BendingStyle getBendingStyle();
 
         // Setters
